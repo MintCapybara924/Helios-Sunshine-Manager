@@ -215,6 +215,18 @@ public partial class InstanceViewModel : ObservableObject
 		OnPropertyChanged(nameof(RunStatusText));
 	}
 
+	/// <summary>
+	/// Immediately sets the Enabled state on both the pending edit buffer (EditEnabled) and
+	/// the underlying model, bypassing the Apply/Discard workflow. Caller is responsible
+	/// for persisting the settings store afterwards.
+	/// Used by the tray menu so a user can enable/disable an instance without opening the UI.
+	/// </summary>
+	public void SetEnabledImmediate(bool value)
+	{
+		_model.Enabled = value;
+		EditEnabled = value;
+	}
+
 	partial void OnIsRunningChanged(bool value)
 	{
 		OnPropertyChanged(nameof(RunStatusText));

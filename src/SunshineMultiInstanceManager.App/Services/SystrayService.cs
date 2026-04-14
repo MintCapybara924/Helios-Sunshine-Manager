@@ -24,6 +24,21 @@ public sealed class SystrayService : IDisposable
 
 	private MenuItem? _exitItem;
 
+	// Cached per-instance MenuItem references so we can update them in place
+	// (e.g., on Enable/Disable toggle) without rebuilding the whole submenu.
+	// Rebuilding would destroy the MenuItem the user is currently interacting
+	// with and cause the tray menu to collapse.
+	private sealed class InstanceMenuEntry
+	{
+		public required InstanceViewModel Instance { get; init; }
+		public required MenuItem InstanceItem { get; init; }
+		public required MenuItem EnableItem { get; init; }
+		public required MenuItem OpenWebUiItem { get; init; }
+		public required MenuItem StartItem { get; init; }
+		public required MenuItem StopItem { get; init; }
+	}
+	private readonly Dictionary<string, InstanceMenuEntry> _instanceMenuEntries = new();
+
 	private bool _disposed;
 
 	public void Initialize(Window mainWindow)
@@ -151,6 +166,7 @@ public sealed class SystrayService : IDisposable
 			}
 
 			_instancesRootItem.Items.Clear();
+			_instanceMenuEntries.Clear();
 
 			if (_mainViewModel == null || _mainViewModel.Instances.Count == 0)
 			{
@@ -164,65 +180,123 @@ public sealed class SystrayService : IDisposable
 
 			foreach (InstanceViewModel instance in _mainViewModel.Instances)
 			{
-				string status = instance.IsRunning
-					? LocalizationService.T("RunStatusRunning")
-					: LocalizationService.T("RunStatusStopped");
-
-				MenuItem instanceItem = new MenuItem
-				{
-					Header = $"{instance.EditName} ({status})"
-				};
-
-				MenuItem openWebUiItem = new MenuItem
-				{
-					Header = LocalizationService.T("EditorOpenWebUi")
-				};
-				openWebUiItem.Click += delegate
-				{
-					OpenInstanceWebUi(instance);
-				};
-
-				MenuItem startItem = new MenuItem
-				{
-					Header = LocalizationService.T("EditorStart")
-				};
-				startItem.Click += delegate
-				{
-					if (_mainViewModel == null)
-					{
-						return;
-					}
-
-					_mainViewModel.SelectedInstance = instance;
-					if (_mainViewModel.StartInstanceCommand.CanExecute(null))
-					{
-						_mainViewModel.StartInstanceCommand.Execute(null);
-					}
-				};
-
-				MenuItem stopItem = new MenuItem
-				{
-					Header = LocalizationService.T("EditorStop")
-				};
-				stopItem.Click += delegate
-				{
-					if (_mainViewModel == null)
-					{
-						return;
-					}
-
-					_mainViewModel.SelectedInstance = instance;
-					if (_mainViewModel.StopInstanceCommand.CanExecute(null))
-					{
-						_mainViewModel.StopInstanceCommand.Execute(null);
-					}
-				};
-
-				instanceItem.Items.Add(openWebUiItem);
-				instanceItem.Items.Add(startItem);
-				instanceItem.Items.Add(stopItem);
-				_instancesRootItem.Items.Add(instanceItem);
+				InstanceMenuEntry entry = CreateInstanceMenuEntry(instance);
+				_instanceMenuEntries[instance.Id] = entry;
+				_instancesRootItem.Items.Add(entry.InstanceItem);
 			}
+		}
+
+		private InstanceMenuEntry CreateInstanceMenuEntry(InstanceViewModel instance)
+		{
+			MenuItem instanceItem = new MenuItem();
+
+			// Enable/Disable toggle. StaysOpenOnClick keeps the tray menu open
+			// after a click so the user can see the state update without the
+			// menu collapsing. We also update this item in place (see
+			// UpdateInstanceMenuEntryInPlace) rather than rebuilding.
+			MenuItem enableItem = new MenuItem
+			{
+				IsCheckable = true,
+				StaysOpenOnClick = true
+			};
+			enableItem.Click += async delegate
+			{
+				if (_mainViewModel == null)
+				{
+					return;
+				}
+
+				await _mainViewModel.ToggleInstanceEnabledAsync(instance);
+			};
+
+			MenuItem openWebUiItem = new MenuItem
+			{
+				Header = LocalizationService.T("EditorOpenWebUi")
+			};
+			openWebUiItem.Click += delegate
+			{
+				OpenInstanceWebUi(instance);
+			};
+
+			MenuItem startItem = new MenuItem
+			{
+				Header = LocalizationService.T("EditorStart")
+			};
+			startItem.Click += delegate
+			{
+				if (_mainViewModel == null)
+				{
+					return;
+				}
+
+				_mainViewModel.SelectedInstance = instance;
+				if (_mainViewModel.StartInstanceCommand.CanExecute(null))
+				{
+					_mainViewModel.StartInstanceCommand.Execute(null);
+				}
+			};
+
+			MenuItem stopItem = new MenuItem
+			{
+				Header = LocalizationService.T("EditorStop")
+			};
+			stopItem.Click += delegate
+			{
+				if (_mainViewModel == null)
+				{
+					return;
+				}
+
+				_mainViewModel.SelectedInstance = instance;
+				if (_mainViewModel.StopInstanceCommand.CanExecute(null))
+				{
+					_mainViewModel.StopInstanceCommand.Execute(null);
+				}
+			};
+
+			instanceItem.Items.Add(enableItem);
+			instanceItem.Items.Add(new Separator());
+			instanceItem.Items.Add(openWebUiItem);
+			instanceItem.Items.Add(startItem);
+			instanceItem.Items.Add(stopItem);
+
+			InstanceMenuEntry entry = new InstanceMenuEntry
+			{
+				Instance = instance,
+				InstanceItem = instanceItem,
+				EnableItem = enableItem,
+				OpenWebUiItem = openWebUiItem,
+				StartItem = startItem,
+				StopItem = stopItem
+			};
+
+			UpdateInstanceMenuEntryInPlace(entry);
+			return entry;
+		}
+
+		/// <summary>
+		/// Updates the header text and IsEnabled flags on an existing entry without
+		/// recreating MenuItem instances. This is what keeps the tray menu open
+		/// after the user toggles Enabled — rebuilding would destroy the MenuItem
+		/// the user just clicked and cause the menu to collapse.
+		/// </summary>
+		private static void UpdateInstanceMenuEntryInPlace(InstanceMenuEntry entry)
+		{
+			InstanceViewModel instance = entry.Instance;
+			string status = instance.IsRunning
+				? LocalizationService.T("RunStatusRunning")
+				: LocalizationService.T("RunStatusStopped");
+
+			entry.InstanceItem.Header = $"{instance.EditName} ({status})";
+
+			entry.EnableItem.Header = instance.EditEnabled
+				? LocalizationService.T("TrayEnabled")
+				: LocalizationService.T("TrayDisabled");
+			entry.EnableItem.IsChecked = instance.EditEnabled;
+
+			entry.OpenWebUiItem.IsEnabled = instance.EditEnabled && instance.IsRunning;
+			entry.StartItem.IsEnabled = instance.EditEnabled && !instance.IsRunning;
+			entry.StopItem.IsEnabled = instance.EditEnabled && instance.IsRunning;
 		}
 
 		private static void OpenInstanceWebUi(InstanceViewModel instance)
@@ -308,11 +382,24 @@ public sealed class SystrayService : IDisposable
 
 		private void OnInstancePropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
+			if (sender is not InstanceViewModel instance)
+			{
+				return;
+			}
+
 			if (e.PropertyName == nameof(InstanceViewModel.EditName)
 				|| e.PropertyName == nameof(InstanceViewModel.EditPort)
-				|| e.PropertyName == nameof(InstanceViewModel.IsRunning))
+				|| e.PropertyName == nameof(InstanceViewModel.IsRunning)
+				|| e.PropertyName == nameof(InstanceViewModel.EditEnabled))
 			{
-				RebuildInstanceMenuItems();
+				if (_instanceMenuEntries.TryGetValue(instance.Id, out InstanceMenuEntry? entry))
+				{
+					UpdateInstanceMenuEntryInPlace(entry);
+				}
+				else
+				{
+					RebuildInstanceMenuItems();
+				}
 			}
 		}
 

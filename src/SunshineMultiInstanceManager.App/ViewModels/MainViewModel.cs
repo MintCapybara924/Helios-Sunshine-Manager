@@ -50,7 +50,7 @@ public partial class MainViewModel : ObservableObject
 
 	public bool CanEditSelectedInstance => SelectedInstance != null && !SelectedInstance.IsRunning;
 	public bool CanApplyDiscardSelectedInstance => SelectedInstance != null && !SelectedInstance.IsRunning && SelectedInstance.IsDirty;
-	public bool CanStartSelectedInstance => SelectedInstance != null && !SelectedInstance.IsRunning;
+	public bool CanStartSelectedInstance => SelectedInstance != null && !SelectedInstance.IsRunning && SelectedInstance.EditEnabled;
 	public bool CanStopSelectedInstance => SelectedInstance?.IsRunning == true;
 	public bool CanOpenWebUiSelectedInstance => SelectedInstance?.IsRunning == true && !(SelectedInstance?.IsRuntimeConfigDirty ?? true);
 
@@ -492,7 +492,8 @@ public partial class MainViewModel : ObservableObject
 			if (string.IsNullOrEmpty(e.PropertyName)
 				|| e.PropertyName == nameof(InstanceViewModel.IsRunning)
 				|| e.PropertyName == nameof(InstanceViewModel.IsDirty)
-				|| e.PropertyName == nameof(InstanceViewModel.IsRuntimeConfigDirty))
+				|| e.PropertyName == nameof(InstanceViewModel.IsRuntimeConfigDirty)
+				|| e.PropertyName == nameof(InstanceViewModel.EditEnabled))
 			{
 				NotifySelectedInstanceUiStateChanged();
 			}
@@ -588,6 +589,26 @@ public partial class MainViewModel : ObservableObject
 
 		message = $"Cannot start '{vm.EditName}': {product.DisplayName} is not installed (missing executable: {executablePath}).";
 		return false;
+	}
+
+	/// <summary>
+	/// Toggles the Enabled state of an instance immediately (used by the tray menu).
+	/// Persists settings so the new state survives restart.
+	/// </summary>
+	public async Task ToggleInstanceEnabledAsync(InstanceViewModel vm)
+	{
+		try
+		{
+			vm.SetEnabledImmediate(!vm.EditEnabled);
+			await _store.SaveSettingsAsync();
+			StatusText = vm.EditEnabled
+				? LocalizationService.T("StatusInstanceEnabled")
+				: LocalizationService.T("StatusInstanceDisabled");
+		}
+		catch (Exception ex)
+		{
+			StatusText = ex.Message;
+		}
 	}
 
 	private async Task TryPersistSettingsForLaunchAsync()
