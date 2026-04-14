@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using SunshineMultiInstanceManager.App.Services;
-using SunshineMultiInstanceManager.Core.Profiles;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.App.Services;
+using Helios.Core.Profiles;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.App.ViewModels;
+namespace Helios.App.ViewModels;
 
 public partial class InstanceViewModel : ObservableObject
 {
@@ -332,3 +332,4 @@ public partial class InstanceViewModel : ObservableObject
 			: null;
 	}
 }
+

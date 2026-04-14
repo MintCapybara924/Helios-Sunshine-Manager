@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json.Serialization;
-using SunshineMultiInstanceManager.Core.Profiles;
+using Helios.Core.Profiles;
 
-namespace SunshineMultiInstanceManager.Core.Storage.Models;
+namespace Helios.Core.Storage.Models;
 
 public sealed class InstanceConfig
 {
@@ -111,3 +111,4 @@ public sealed class InstanceConfig
 		};
 	}
 }
+

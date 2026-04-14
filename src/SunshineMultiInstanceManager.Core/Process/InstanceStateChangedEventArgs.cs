@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 public sealed class InstanceStateChangedEventArgs : EventArgs
 {
@@ -17,3 +17,4 @@ public sealed class InstanceStateChangedEventArgs : EventArgs
 		IsRunning = running;
 	}
 }
+

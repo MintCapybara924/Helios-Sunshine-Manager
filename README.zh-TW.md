@@ -1,4 +1,6 @@
-# Sunshine Multi-Instance Manager
+# Helios
+
+Formerly Sunshine Multi-Instance Manager.
 
 一款現代化的 WPF 應用程式，用於在單台 Windows 電腦上管理多個 [Sunshine](https://github.com/LizardByte/Sunshine)（及其分支）串流實例。
 
@@ -25,9 +27,9 @@
 
 ## 安裝方式
 
-1. 從最新版本下載 `SunshineMultiInstanceManagerSetup.exe`。
+1. 從最新版本下載 `HeliosSetup.exe`。
 2. 執行安裝程式並依照畫面指示完成安裝。
-3. 以系統管理員身分啟動 `SunshineMultiInstanceManager.exe`。
+3. 以系統管理員身分啟動 `Helios.exe`。
 
 首次啟動時，應用程式會自動：
 - 將 **Spawner Service** 註冊為 Windows 服務（LocalSystem）。
@@ -47,10 +49,10 @@
 
 ```bash
 # 建置應用程式
-dotnet build src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj
+dotnet build src/SunshineMultiInstanceManager.App/Helios.App.csproj
 
 # 發佈（自動包含 Spawner Service）
-dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj -p:PublishProfile=win-x64-fd
+dotnet publish src/SunshineMultiInstanceManager.App/Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish/win-x64-fd
 ```
 
 發佈產出位於 `publish/win-x64-fd/`，包含主應用程式和 `service/` 子目錄中的 Spawner Service。
@@ -58,9 +60,9 @@ dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager
 ## 架構
 
 ```
-SunshineMultiInstanceManager.App      WPF 桌面應用程式（UI + 本地控制）
-SunshineMultiInstanceManager.Core     共用函式庫（程序管理、設定、音訊、顯示、更新）
-SunshineMultiInstanceManager.Spawner  Windows 服務（以 SYSTEM 執行，透過 Named Pipe 指令啟動實例）
+Helios.App      WPF 桌面應用程式（UI + 本地控制）
+Helios.Core     共用函式庫（程序管理、設定、音訊、顯示、更新）
+Helios.Spawner  Windows 服務（以 SYSTEM 執行，透過 Named Pipe 指令啟動實例）
 ```
 
 App 透過 Named Pipe 與 Spawner Service 通訊。Service 使用指派到使用者互動式工作階段的 SYSTEM Token 啟動 Sunshine 實例，使其能夠擷取安全桌面（UAC 和登入畫面）——與標準 Sunshine 服務安裝具有相同的能力。
@@ -75,7 +77,7 @@ App 透過 Named Pipe 與 Spawner Service 通訊。Service 使用指派到使用
 
 ## 靈感來源
 
-本專案的靈感來自 [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher)，一款用於多開 Apollo 實例的啟動器。Sunshine Multi-Instance Manager 在此基礎上擴展了對更多 Sunshine 系列分支的支援。
+本專案的靈感來自 [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher)，一款用於多開 Apollo 實例的啟動器。Helios 在此基礎上擴展了對更多 Sunshine 系列分支的支援。
 
 ## AI 揭露聲明
 

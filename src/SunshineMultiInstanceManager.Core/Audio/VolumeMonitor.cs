@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using NAudio.CoreAudioApi;
 using NAudio.CoreAudioApi.Interfaces;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Process;
+using Helios.Core.Storage;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Core.Audio;
+namespace Helios.Core.Audio;
 
 public sealed class VolumeMonitor : IDisposable, IMMNotificationClient
 {
@@ -215,3 +215,4 @@ public sealed class VolumeMonitor : IDisposable, IMMNotificationClient
 		}
 	}
 }
+

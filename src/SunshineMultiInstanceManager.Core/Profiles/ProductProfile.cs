@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SunshineMultiInstanceManager.Core.Profiles;
+namespace Helios.Core.Profiles;
 
 /// <summary>
 /// Vibeshine 鐢㈠搧甯告暩瑷畾妾斻€?/// 鎵€鏈夎垏鐗瑰畾 Sunshine 鍒嗘敮鐗堟湰鐩镐緷鐨勮矾寰戙€佹湇鍕欏悕绋便€佸彲鍩疯妾斿悕绋辩殕闆嗕腑鏂兼锛?/// 鏈締鑻ラ渶鏀彺鍘熺増 Sunshine 鎴?Apollo 鍙渶鏂板灏嶆噳鐨?Profile 椤炲垾锛屼富閭忚集涓嶅嫊。"///
@@ -146,19 +146,19 @@ public static class VibeshineProfile
     // 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 
     /// <summary>Manager application display name used by system integrations.</summary>
-    public const string ManagerAppName = "Sunshine Multi-Instance Manager";
+    public const string ManagerAppName = "Helios";
 
     /// <summary>Task Scheduler 涓帓绋嬪伐浣滅殑鍚嶇ū。"/summary>
-    public const string ScheduledTaskName = "SunshineMultiInstanceManager_AutoStart";
+    public const string ScheduledTaskName = "Helios_AutoStart";
 
     /// <summary>Task Scheduler 涓帓绋嬪伐浣滄墍鍦ㄧ殑璩囨枡澶俱€?/summary>
-    public const string ScheduledTaskFolder = "\\SunshineMultiInstanceManager";
+    public const string ScheduledTaskFolder = "\\Helios";
 
     /// <summary>闁嬫鑷暉鐨勫欢閬叉檪闁擄紙绉掞級銆傚皪鎳?AHK 鐗堢殑 PT30S 瑷畾。"/summary>
     public const int AutoStartDelaySeconds = 30;
 
     /// <summary>Windows service name for the spawner component.</summary>
-    public const string SpawnerServiceName = "SunshineMultiInstanceManagerSpawner";
+    public const string SpawnerServiceName = "HeliosSpawner";
 
     // 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
     // 閫茬▼瀹堣
@@ -181,3 +181,4 @@ public static class VibeshineProfile
     public static int GetDefaultPort(int instanceIndex) =>
         InstanceBasePort + (instanceIndex - 1) * InstancePortStep;
 }
+

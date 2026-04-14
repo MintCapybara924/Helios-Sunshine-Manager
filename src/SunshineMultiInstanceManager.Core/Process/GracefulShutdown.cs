@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 public static class GracefulShutdown
 {
@@ -151,3 +151,4 @@ public static class GracefulShutdown
 		}
 	}
 }
+

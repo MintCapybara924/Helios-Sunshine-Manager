@@ -1,6 +1,6 @@
-using SunshineMultiInstanceManager.App.ViewModels;
+﻿using Helios.App.ViewModels;
 
-namespace SunshineMultiInstanceManager.App.Views;
+namespace Helios.App.Views;
 
 public partial class SettingsWindow
 {
@@ -10,3 +10,4 @@ public partial class SettingsWindow
 		DataContext = vm;
 	}
 }
+

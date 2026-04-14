@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 public sealed class ProcessLauncher
 {
@@ -545,12 +545,12 @@ public sealed class ProcessLauncher
 		string safeId = string.IsNullOrWhiteSpace(instance.Id)
 			? "default"
 			: instance.Id.Replace("\\", "_").Replace("/", "_").Replace(":", "_");
-		return "\\SunshineMultiInstanceManager\\Launch_" + safeId;
+		return "\\Helios\\Launch_" + safeId;
 	}
 
 	private static void EnsureTaskFolder(Microsoft.Win32.TaskScheduler.TaskService taskService)
 	{
-		const string folderName = "SunshineMultiInstanceManager";
+		const string folderName = "Helios";
 		try
 		{
 			taskService.GetFolder("\\" + folderName);
@@ -647,3 +647,4 @@ public sealed class ProcessLauncher
 		return (value ?? string.Empty).Replace("'", "''");
 	}
 }
+

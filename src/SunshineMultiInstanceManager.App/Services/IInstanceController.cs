@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Process;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.App.Services;
+namespace Helios.App.Services;
 
 public interface IInstanceController : IAsyncDisposable
 {
@@ -16,3 +16,4 @@ public interface IInstanceController : IAsyncDisposable
 	Task StopInstanceAsync(InstanceConfig instance, CancellationToken ct = default);
 	bool IsRunning(string instanceId);
 }
+

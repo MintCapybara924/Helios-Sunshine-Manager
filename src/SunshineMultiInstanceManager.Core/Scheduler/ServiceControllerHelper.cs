@@ -4,11 +4,11 @@ using System.IO;
 using System.ServiceProcess;
 using Microsoft.Win32;
 
-namespace SunshineMultiInstanceManager.Core.Scheduler;
+namespace Helios.Core.Scheduler;
 
 public static class ServiceControllerHelper
 {
-	private const string SpawnerExeName = "SunshineMultiInstanceManager.Spawner.exe";
+	private const string SpawnerExeName = "Helios.Spawner.exe";
 
 	/// <summary>
 	/// Locates the Spawner executable in a "service" subdirectory next to the running app.
@@ -24,7 +24,26 @@ public static class ServiceControllerHelper
 
 		// Fallback: same directory as app
 		string flatCandidate = Path.Combine(appDir, SpawnerExeName);
-		return File.Exists(flatCandidate) ? flatCandidate : null;
+		if (File.Exists(flatCandidate)) return flatCandidate;
+
+		// Development fallback: running from App bin output, probe Spawner project bin output.
+		string[] devCandidates =
+		[
+			Path.GetFullPath(Path.Combine(appDir, @"..\..\..\..\..\SunshineMultiInstanceManager.Spawner\bin\x64\Debug\net8.0-windows", SpawnerExeName)),
+			Path.GetFullPath(Path.Combine(appDir, @"..\..\..\..\..\SunshineMultiInstanceManager.Spawner\bin\x64\Release\net8.0-windows", SpawnerExeName)),
+			Path.GetFullPath(Path.Combine(appDir, @"..\..\..\..\..\SunshineMultiInstanceManager.Spawner\bin\Debug\net8.0-windows", SpawnerExeName)),
+			Path.GetFullPath(Path.Combine(appDir, @"..\..\..\..\..\SunshineMultiInstanceManager.Spawner\bin\Release\net8.0-windows", SpawnerExeName))
+		];
+
+		foreach (string candidate in devCandidates)
+		{
+			if (File.Exists(candidate))
+			{
+				return candidate;
+			}
+		}
+
+		return null;
 	}
 
 	/// <summary>
@@ -170,3 +189,4 @@ public static class ServiceControllerHelper
 		registryKey.SetValue("Start", (int)mode, RegistryValueKind.DWord);
 	}
 }
+

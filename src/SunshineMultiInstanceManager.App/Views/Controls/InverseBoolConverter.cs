@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace SunshineMultiInstanceManager.App.Views.Controls;
+namespace Helios.App.Views.Controls;
 
 [ValueConversion(typeof(bool), typeof(bool))]
 public sealed class InverseBoolConverter : IValueConverter
@@ -17,3 +17,4 @@ public sealed class InverseBoolConverter : IValueConverter
 		return value is bool flag && !flag;
 	}
 }
+

@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
-namespace SunshineMultiInstanceManager.Core.Update;
+namespace Helios.Core.Update;
 
 [JsonSerializable(typeof(GitHubReleaseDto))]
 [JsonSerializable(typeof(GitHubReleaseDto[]))]
@@ -529,3 +529,4 @@ internal class GitHubJsonContext : JsonSerializerContext, IJsonTypeInfoResolver
 		return null;
 	}
 }
+

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Process;
+using Helios.Core.Storage;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Core.Display;
+namespace Helios.Core.Display;
 
 public sealed class DisplayWatcher : IDisposable
 {
@@ -231,3 +231,4 @@ public sealed class DisplayWatcher : IDisposable
 		}
 	}
 }
+

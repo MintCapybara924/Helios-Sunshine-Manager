@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>x64</Platforms>
-    <RootNamespace>SunshineMultiInstanceManager.Core</RootNamespace>
+    <RootNamespace>Helios.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,3 +23,4 @@
   </ItemGroup>
 
 </Project>
+

@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
-using SunshineMultiInstanceManager.App.Services;
-using SunshineMultiInstanceManager.App.ViewModels;
-using SunshineMultiInstanceManager.Core.Display;
-using SunshineMultiInstanceManager.Core.Storage;
+using Helios.App.Services;
+using Helios.App.ViewModels;
+using Helios.Core.Display;
+using Helios.Core.Storage;
 
-namespace SunshineMultiInstanceManager.App.Views;
+namespace Helios.App.Views;
 
 public partial class MainWindow
 {
@@ -114,3 +114,4 @@ public partial class MainWindow
 		settings.WindowHeight = ActualHeight;
 	}
 }
+

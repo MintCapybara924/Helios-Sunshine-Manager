@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 public interface ILogger
 {
@@ -14,3 +14,4 @@ public interface ILogger
 
 	void LogError(Exception ex, string message, params object?[] args);
 }
+

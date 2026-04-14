@@ -1,4 +1,6 @@
-# Sunshine Multi-Instance Manager
+# Helios
+
+Multi-instance manager for Sunshine and its forks.
 
 A modern WPF application for managing multiple [Sunshine](https://github.com/LizardByte/Sunshine) (and its forks) streaming instances on a single Windows machine.
 
@@ -25,9 +27,9 @@ A modern WPF application for managing multiple [Sunshine](https://github.com/Liz
 
 ## Installation
 
-1. Download `SunshineMultiInstanceManagerSetup.exe` from the latest release.
+1. Download `HeliosSetup.exe` from the latest release.
 2. Run the installer and follow the on-screen instructions.
-3. Launch `SunshineMultiInstanceManager.exe` as administrator.
+3. Launch `Helios.exe` as administrator.
 
 On first launch, the application will automatically:
 - Register the **Spawner Service** as a Windows Service (LocalSystem).
@@ -47,27 +49,53 @@ No manual service setup is required.
 
 ```bash
 # Build the application
-dotnet build src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj
+dotnet build src/SunshineMultiInstanceManager.App/Helios.App.csproj
 
 # Publish (includes Spawner Service automatically)
-dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj -p:PublishProfile=win-x64-fd
+dotnet publish src/SunshineMultiInstanceManager.App/Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish/win-x64-fd
 ```
 
 The publish output at `publish/win-x64-fd/` includes the main application and the `service/` subdirectory containing the Spawner Service.
 
+## Inno Setup Packaging Notes (Helios)
+
+- Main publish command:
+
+```bash
+dotnet publish src/SunshineMultiInstanceManager.App/Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish/win-x64-fd
+```
+
+- Required payload:
+	- `publish/win-x64-fd/Helios.exe`
+	- full `publish/win-x64-fd/service/` directory (do not change folder layout)
+	- optional icon `src/SunshineMultiInstanceManager.App/Assets/SMIM.ico`
+- Inno setup essentials:
+	- `PrivilegesRequired=admin`
+	- `ArchitecturesInstallIn64BitMode=x64`
+	- `ArchitecturesAllowed=x64`
+	- `DefaultDirName={autopf}\Helios`
+	- `UninstallDisplayIcon={app}\Helios.exe`
+- Runtime dependency: .NET 8 Desktop Runtime (x64) is required (`--no-self-contained`).
+- Service lifecycle:
+	- Do not create service in installer; app first-run registers it.
+	- On uninstall, stop and delete `HeliosService`.
+- Conflict services (`SunshineService` / `ApolloService`) are handled by app startup logic, not installer.
+- Keep `%ProgramData%\Helios` data on uninstall.
+- During upgrade, stop service and close app (`Helios.exe`) before file replacement.
+
 ## Architecture
 
 ```
-SunshineMultiInstanceManager.App      WPF desktop application (UI + local control)
-SunshineMultiInstanceManager.Core     Shared library (process management, config, audio, display, updates)
-SunshineMultiInstanceManager.Spawner  Windows Service (runs as SYSTEM, launches instances via Named Pipe commands)
+Helios.App      WPF desktop application (UI + local control)
+Helios.Core     Shared library (process management, config, audio, display, updates)
+Helios.Spawner  Windows Service (runs as SYSTEM, launches instances via Named Pipe commands)
 ```
 
 The App communicates with the Spawner Service over a Named Pipe. The Service launches Sunshine instances using a SYSTEM token assigned to the user's interactive session, which allows capturing the secure desktop (UAC and login screen) - the same capability as a standard Sunshine service installation.
 
 ## Known Limitations
 
-> **Vibeshine / Vibepollo installer conflict**: While this manager is designed to let multiple Sunshine-based branches coexist, the Vibeshine and Vibepollo installers will require you to uninstall any other Sunshine-based branch before proceeding — installation cannot continue unless you agree. If you install a Vibe-series branch first and then install Sunshine or Apollo afterward, they can temporarily coexist. However, the next time you update the Vibe-series branch, the installer will once again require removal of the other branches.
+> **Vibeshine / Vibepollo installer conflict**: While this manager is designed to let multiple Sunshine-based branches coexist, the Vibeshine and Vibepollo installers will require you to uninstall any other Sunshine-based branch before proceeding - installation cannot continue unless you agree. If you install a Vibe-series branch first and then install Sunshine or Apollo afterward, they can temporarily coexist. However, the next time you update the Vibe-series branch, the installer will once again require removal of the other branches.
 
 ## Disclaimer
 
@@ -75,7 +103,7 @@ This project was built primarily for personal use. Functionality is not guarante
 
 ## Inspiration
 
-This project was inspired by [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher), a multi-instance launcher for Apollo. Sunshine Multi-Instance Manager expands on the concept with support for a broader range of Sunshine-based branches.
+This project was inspired by [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher), a multi-instance launcher for Apollo. Helios expands on the concept with support for a broader range of Sunshine-based branches.
 
 ## AI Disclosure
 

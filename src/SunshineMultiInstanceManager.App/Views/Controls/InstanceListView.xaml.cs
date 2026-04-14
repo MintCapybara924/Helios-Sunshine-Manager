@@ -1,6 +1,6 @@
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
-namespace SunshineMultiInstanceManager.App.Views.Controls;
+namespace Helios.App.Views.Controls;
 
 public partial class InstanceListView : UserControl
 {
@@ -9,3 +9,4 @@ public partial class InstanceListView : UserControl
 		InitializeComponent();
 	}
 }
+

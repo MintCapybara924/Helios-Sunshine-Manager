@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using SunshineMultiInstanceManager.Core.Process;
+using Helios.Core.Process;
 
-namespace SunshineMultiInstanceManager.Spawner;
+namespace Helios.Spawner;
 
-public sealed class ServiceLogger : SunshineMultiInstanceManager.Core.Process.ILogger
+public sealed class ServiceLogger : Helios.Core.Process.ILogger
 {
 	private readonly string _name;
 
@@ -15,7 +15,7 @@ public sealed class ServiceLogger : SunshineMultiInstanceManager.Core.Process.IL
 
 	private static readonly string LogRoot = Path.Combine(
 		Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-		"SunshineMultiInstanceManager");
+		"Helios");
 
 	private static readonly string LogPath = Path.Combine(LogRoot, "service.log");
 
@@ -87,3 +87,4 @@ public sealed class ServiceLogger : SunshineMultiInstanceManager.Core.Process.IL
 		}
 	}
 }
+

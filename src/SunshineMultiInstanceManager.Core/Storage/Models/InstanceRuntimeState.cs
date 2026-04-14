@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace SunshineMultiInstanceManager.Core.Storage.Models;
+namespace Helios.Core.Storage.Models;
 
 public sealed class InstanceRuntimeState
 {
@@ -32,3 +32,4 @@ public sealed class InstanceRuntimeState
 	public bool ManualStopRequested { get; set; }
 
 }
+

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace SunshineMultiInstanceManager.App.Views.Controls;
+namespace Helios.App.Views.Controls;
 
 public sealed class SpacedStackPanel : StackPanel
 {
@@ -51,3 +51,4 @@ public sealed class SpacedStackPanel : StackPanel
 		}
 	}
 }
+

@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SunshineMultiInstanceManager.Core.Profiles;
+namespace Helios.Core.Profiles;
 
 public sealed class ManagedProductDefinition
 {
@@ -93,3 +93,4 @@ public static class ManagedProductCatalog
 			?? All.First(p => p.Code == "sunshine");
 	}
 }
+

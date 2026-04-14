@@ -1,12 +1,12 @@
 ﻿<ui:FluentWindow
-    x:Class="SunshineMultiInstanceManager.App.Views.SettingsWindow"
+    x:Class="Helios.App.Views.SettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:local="clr-namespace:SunshineMultiInstanceManager.App.Views.Controls"
-    xmlns:vm="clr-namespace:SunshineMultiInstanceManager.App.ViewModels"
+    xmlns:local="clr-namespace:Helios.App.Views.Controls"
+    xmlns:vm="clr-namespace:Helios.App.ViewModels"
     mc:Ignorable="d"
     Title="{Binding AppNameText}"
     Icon="/Assets/SMIM.ico"
@@ -402,3 +402,4 @@
     </Grid>
 
 </ui:FluentWindow>
+

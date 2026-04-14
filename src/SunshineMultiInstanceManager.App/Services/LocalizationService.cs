@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
-namespace SunshineMultiInstanceManager.App.Services;
+namespace Helios.App.Services;
 
 public static class LocalizationService
 {
@@ -11,7 +11,7 @@ public static class LocalizationService
 
 	private static readonly Dictionary<string, string> En = new(StringComparer.OrdinalIgnoreCase)
 	{
-		["AppName"] = "Sunshine Multi-Instance Manager",
+		["AppName"] = "Helios - Sunshine Multi-Instance Manager",
 		["Settings"] = "Settings",
 		["OpenSettings"] = "Settings",
 		["ThemeQuickSwitch"] = "Theme",
@@ -131,7 +131,7 @@ public static class LocalizationService
 
 	private static readonly Dictionary<string, string> ZhTw = new(StringComparer.OrdinalIgnoreCase)
 	{
-		["AppName"] = "Sunshine 多實例管理器",
+		["AppName"] = "Helios - Sunshine 多實例管理器",
 		["ThemeQuickSwitch"] = "主題",
 		["ThemeLight"] = "淺色",
 		["ThemeDark"] = "深色",
@@ -251,7 +251,7 @@ public static class LocalizationService
 
 	private static readonly Dictionary<string, string> ZhCn = new(StringComparer.OrdinalIgnoreCase)
 	{
-		["AppName"] = "Sunshine 多实例管理器",
+		["AppName"] = "Helios - Sunshine 多实例管理器",
 		["ThemeQuickSwitch"] = "主题",
 		["ThemeLight"] = "浅色",
 		["ThemeDark"] = "深色",
@@ -371,7 +371,7 @@ public static class LocalizationService
 
 	private static readonly Dictionary<string, string> Ja = new(StringComparer.OrdinalIgnoreCase)
 	{
-		["AppName"] = "Sunshine マルチインスタンスマネージャー",
+		["AppName"] = "Helios - Sunshine マルチインスタンスマネージャー",
 		["ThemeQuickSwitch"] = "テーマ",
 		["ThemeLight"] = "ライト",
 		["ThemeDark"] = "ダーク",

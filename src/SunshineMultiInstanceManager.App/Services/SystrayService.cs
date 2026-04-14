@@ -7,9 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hardcodet.Wpf.TaskbarNotification;
-using SunshineMultiInstanceManager.App.ViewModels;
+using Helios.App.ViewModels;
 
-namespace SunshineMultiInstanceManager.App.Services;
+namespace Helios.App.Services;
 
 public sealed class SystrayService : IDisposable
 {
@@ -453,3 +453,4 @@ public sealed class SystrayService : IDisposable
 		}
 	}
 }
+

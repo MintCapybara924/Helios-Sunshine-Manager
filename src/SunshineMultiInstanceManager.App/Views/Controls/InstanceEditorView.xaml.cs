@@ -1,9 +1,9 @@
-using Microsoft.Win32;
-using SunshineMultiInstanceManager.App.ViewModels;
+﻿using Microsoft.Win32;
+using Helios.App.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace SunshineMultiInstanceManager.App.Views.Controls;
+namespace Helios.App.Views.Controls;
 
 public partial class InstanceEditorView : UserControl
 {
@@ -45,3 +45,4 @@ public partial class InstanceEditorView : UserControl
 		}
 	}
 }
+

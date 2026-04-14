@@ -1,29 +1,29 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.ServiceProcess;
-using SunshineMultiInstanceManager.App.Services;
-using SunshineMultiInstanceManager.App.ViewModels;
-using SunshineMultiInstanceManager.App.Views;
-using SunshineMultiInstanceManager.Core.Audio;
-using SunshineMultiInstanceManager.Core.Display;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Scheduler;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Update;
+using Helios.App.Services;
+using Helios.App.ViewModels;
+using Helios.App.Views;
+using Helios.Core.Audio;
+using Helios.Core.Display;
+using Helios.Core.Process;
+using Helios.Core.Scheduler;
+using Helios.Core.Storage;
+using Helios.Core.Update;
 using Wpf.Ui.Appearance;
 
-namespace SunshineMultiInstanceManager.App;
+namespace Helios.App;
 
 public partial class App : Application
 {
 	public static bool AllowClose { get; private set; }
 	private static readonly string[] ConflictingServiceNames = ["SunshineService", "ApolloService"];
 
-	private const string SingleInstanceMutexName = @"Local\SunshineMultiInstanceManager.SingleInstance";
+	private const string SingleInstanceMutexName = @"Local\Helios.SingleInstance";
 	private Mutex? _singleInstanceMutex;
 	private bool _ownsSingleInstanceMutex;
 
@@ -42,7 +42,7 @@ public partial class App : Application
 		if (!createdNew)
 		{
 			MessageBox.Show(
-				"Sunshine Multi-Instance Manager is already running.",
+				"Helios is already running.",
 				"Already Running",
 				MessageBoxButton.OK,
 				MessageBoxImage.Information);
@@ -88,7 +88,7 @@ public partial class App : Application
 		{
 			logger.LogError("Manager service pipe is unavailable. Service-only mode will not fall back to local controller.");
 			MessageBox.Show(
-				"Service-only mode is enabled, but manager service pipe is unavailable.\nPlease verify the SunshineMultiInstanceManager service is running.",
+				"Service-only mode is enabled, but manager service pipe is unavailable.\nPlease verify the Helios service is running.",
 				"Service Unavailable",
 				MessageBoxButton.OK,
 				MessageBoxImage.Error);
@@ -337,3 +337,4 @@ public partial class App : Application
 		}
 	}
 }
+

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NAudio.CoreAudioApi;
 
-namespace SunshineMultiInstanceManager.Core.Audio;
+namespace Helios.Core.Audio;
 
 public sealed class AudioDeviceService : IDisposable
 {
@@ -105,3 +105,4 @@ public sealed class AudioDeviceService : IDisposable
 		}
 	}
 }
+

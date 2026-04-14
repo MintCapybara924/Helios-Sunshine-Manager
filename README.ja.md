@@ -1,4 +1,4 @@
-# Sunshine Multi-Instance Manager
+# Helios
 
 単一の Windows マシン上で複数の [Sunshine](https://github.com/LizardByte/Sunshine)（およびそのフォーク）ストリーミングインスタンスを管理するモダンな WPF アプリケーションです。
 
@@ -25,9 +25,9 @@
 
 ## インストール
 
-1. 最新リリースから `SunshineMultiInstanceManagerSetup.exe` をダウンロード。
+1. 最新リリースから `HeliosSetup.exe` をダウンロード。
 2. インストーラーを実行し、画面の指示に従ってインストールを完了。
-3. `SunshineMultiInstanceManager.exe` を管理者として起動。
+3. `Helios.exe` を管理者として起動。
 
 初回起動時、アプリケーションは自動的に：
 - **Spawner Service** を Windows サービス（LocalSystem）として登録。
@@ -47,10 +47,10 @@
 
 ```bash
 # アプリケーションをビルド
-dotnet build src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj
+dotnet build src/SunshineMultiInstanceManager.App/Helios.App.csproj
 
 # 発行（Spawner Service を自動的に含む）
-dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj -p:PublishProfile=win-x64-fd
+dotnet publish src/SunshineMultiInstanceManager.App/Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish/win-x64-fd
 ```
 
 発行出力は `publish/win-x64-fd/` にあり、メインアプリケーションと `service/` サブディレクトリ内の Spawner Service が含まれます。
@@ -58,9 +58,9 @@ dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager
 ## アーキテクチャ
 
 ```
-SunshineMultiInstanceManager.App      WPF デスクトップアプリケーション（UI + ローカル制御）
-SunshineMultiInstanceManager.Core     共有ライブラリ（プロセス管理、設定、オーディオ、ディスプレイ、アップデート）
-SunshineMultiInstanceManager.Spawner  Windows サービス（SYSTEM として実行、Named Pipe コマンドでインスタンスを起動）
+Helios.App      WPF デスクトップアプリケーション（UI + ローカル制御）
+Helios.Core     共有ライブラリ（プロセス管理、設定、オーディオ、ディスプレイ、アップデート）
+Helios.Spawner  Windows サービス（SYSTEM として実行、Named Pipe コマンドでインスタンスを起動）
 ```
 
 App は Named Pipe を介して Spawner Service と通信します。Service はユーザーの対話型セッションに割り当てられた SYSTEM トークンを使用して Sunshine インスタンスを起動し、セキュアデスクトップ（UAC およびログイン画面）のキャプチャを可能にします — 標準の Sunshine サービスインストールと同等の機能です。
@@ -75,7 +75,7 @@ App は Named Pipe を介して Spawner Service と通信します。Service は
 
 ## インスピレーション
 
-本プロジェクトは、Apollo のマルチインスタンスランチャーである [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher) に着想を得ています。Sunshine Multi-Instance Manager は、そのコンセプトを基に、より多くの Sunshine 系ブランチへの対応を追加しています。
+本プロジェクトは、Apollo のマルチインスタンスランチャーである [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher) に着想を得ています。Helios は、そのコンセプトを基に、より多くの Sunshine 系ブランチへの対応を追加しています。
 
 ## AI に関する開示
 

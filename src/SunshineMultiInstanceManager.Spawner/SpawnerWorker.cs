@@ -3,12 +3,12 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Scheduler;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Process;
+using Helios.Core.Scheduler;
+using Helios.Core.Storage;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Spawner;
+namespace Helios.Spawner;
 
 /// <summary>
 /// Spawner 鏈嶅嫏涓昏看鍦堬紙M2 灏囧浣滃闅涚殑 CreateProcessAsUser 閭忚集锛夈€?/// 鐩墠鐐轰綌浣嶉鏋讹紝纰轰繚 M1 鍙法璀€?/// </summary>
@@ -28,7 +28,7 @@ public sealed class SpawnerWorker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("SunshineMultiInstanceManager service started.");
+        _logger.LogInformation("Helios service started.");
         _serviceLogger.LogInformation("Service boot sequence started.");
 
         _store = new SettingsStore();
@@ -60,7 +60,7 @@ public sealed class SpawnerWorker : BackgroundService
             _commandLock.Dispose();
 
             _serviceLogger.LogInformation("Service stopped.");
-            _logger.LogInformation("SunshineMultiInstanceManager service stopped.");
+            _logger.LogInformation("Helios service stopped.");
         }
     }
 
@@ -233,3 +233,4 @@ public sealed class SpawnerWorker : BackgroundService
         return _store!.Settings.Instances.Find(i => i.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
     }
 }
+

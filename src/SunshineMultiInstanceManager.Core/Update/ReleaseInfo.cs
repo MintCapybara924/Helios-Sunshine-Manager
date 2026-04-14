@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SunshineMultiInstanceManager.Core.Update;
+namespace Helios.Core.Update;
 
 public sealed record ReleaseInfo(string TagName, string Name, bool IsPreRelease, string DownloadUrl, long SizeBytes, DateTimeOffset PublishedAt, string ReleaseNotes)
 {
@@ -21,3 +21,4 @@ public sealed record ReleaseInfo(string TagName, string Name, bool IsPreRelease,
 		}
 	}
 }
+

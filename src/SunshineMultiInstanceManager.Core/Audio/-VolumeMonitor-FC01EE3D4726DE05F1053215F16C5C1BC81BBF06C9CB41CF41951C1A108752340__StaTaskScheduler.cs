@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SunshineMultiInstanceManager.Core.Audio;
+namespace Helios.Core.Audio;
 
 internal sealed class _003CVolumeMonitor_003EFC01EE3D4726DE05F1053215F16C5C1BC81BBF06C9CB41CF41951C1A108752340__StaTaskScheduler : TaskScheduler
 {
@@ -34,3 +34,4 @@ internal sealed class _003CVolumeMonitor_003EFC01EE3D4726DE05F1053215F16C5C1BC81
 		return Array.Empty<Task>();
 	}
 }
+

@@ -4,15 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using Microsoft.Win32.TaskScheduler;
-using SunshineMultiInstanceManager.Core.Process;
+using Helios.Core.Process;
 
-namespace SunshineMultiInstanceManager.Core.Scheduler;
+namespace Helios.Core.Scheduler;
 
 public sealed class SchedulerService
 {
 	private readonly ILogger _logger;
 
-	private static string FullTaskPath => "\\SunshineMultiInstanceManager\\SunshineMultiInstanceManager_AutoStart";
+	private static string FullTaskPath => "\\Helios\\Helios_AutoStart";
 
 	public SchedulerService(ILogger logger)
 	{
@@ -63,7 +63,7 @@ public sealed class SchedulerService
 		{
 			EnsureTaskFolder(taskService);
 			TaskDefinition taskDefinition = taskService.NewTask();
-				taskDefinition.RegistrationInfo.Description = "Sunshine Multi-Instance Manager tray autostart at user sign-in";
+				taskDefinition.RegistrationInfo.Description = "Helios tray autostart at user sign-in";
 			taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;
 			taskDefinition.Principal.UserId = currentUser;
 			taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken;
@@ -102,7 +102,7 @@ public sealed class SchedulerService
 
 	private static void EnsureTaskFolder(TaskService ts)
 	{
-		string text = "\\SunshineMultiInstanceManager".TrimStart('\\');
+		string text = "\\Helios".TrimStart('\\');
 		if (string.IsNullOrEmpty(text))
 		{
 			return;
@@ -132,3 +132,4 @@ public sealed class SchedulerService
 		return isSystemPrincipal || hasBootTrigger;
 	}
 }
+

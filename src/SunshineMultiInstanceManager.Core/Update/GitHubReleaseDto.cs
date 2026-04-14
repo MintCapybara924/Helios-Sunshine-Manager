@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace SunshineMultiInstanceManager.Core.Update;
+namespace Helios.Core.Update;
 
 internal sealed class GitHubReleaseDto
 {
@@ -27,3 +27,4 @@ internal sealed class GitHubReleaseDto
 	public List<GitHubAssetDto> Assets { get; set; } = new List<GitHubAssetDto>();
 
 }
+

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
@@ -6,11 +6,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Process;
+using Helios.Core.Storage;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.App.Services;
+namespace Helios.App.Services;
 
 public sealed class ServiceInstanceController : IInstanceController
 {
@@ -175,3 +175,4 @@ public sealed class ServiceInstanceController : IInstanceController
 		}
 	}
 }
+

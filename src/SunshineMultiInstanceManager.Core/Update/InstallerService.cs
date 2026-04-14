@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -6,14 +6,14 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Profiles;
+using Helios.Core.Process;
+using Helios.Core.Profiles;
 
-namespace SunshineMultiInstanceManager.Core.Update;
+namespace Helios.Core.Update;
 
 public sealed class InstallerService
 {
-	private const string UserAgent = "SunshineMultiInstanceManager/1.0";
+	private const string UserAgent = "Helios/1.0";
 
 	private static readonly HttpClient s_http = CreateHttpClient();
 
@@ -368,3 +368,4 @@ public sealed class InstallerService
 		return httpClient;
 	}
 }
+

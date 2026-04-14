@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Process;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.App.Services;
+namespace Helios.App.Services;
 
 public sealed class LocalInstanceController : IInstanceController
 {
@@ -54,3 +54,4 @@ public sealed class LocalInstanceController : IInstanceController
 		InstanceStateChanged?.Invoke(this, e);
 	}
 }
+

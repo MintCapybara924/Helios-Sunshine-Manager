@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace SunshineMultiInstanceManager.Core.Storage.Models;
+namespace Helios.Core.Storage.Models;
 
 public sealed class TransientState
 {
@@ -16,3 +16,4 @@ public sealed class TransientState
 	[JsonPropertyName("logPanelVisible")]
 	public bool LogPanelVisible { get; set; }
 }
+

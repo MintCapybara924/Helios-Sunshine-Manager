@@ -45,3 +45,4 @@ installer/dist/
 
 # Project local tooling/config
 .claude/settings.local.json
+

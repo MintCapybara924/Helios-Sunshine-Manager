@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SunshineMultiInstanceManager.Core.Storage;
+namespace Helios.Core.Storage;
 
 public static class AtomicFile
 {
@@ -172,3 +172,4 @@ public static class AtomicFile
 		}
 	}
 }
+

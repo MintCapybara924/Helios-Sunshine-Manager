@@ -1,6 +1,6 @@
-﻿using SunshineMultiInstanceManager.App.Services;
+﻿using Helios.App.Services;
 
-namespace SunshineMultiInstanceManager.App.ViewModels;
+namespace Helios.App.ViewModels;
 
 public sealed class AudioDeviceViewModel
 {
@@ -22,3 +22,4 @@ public sealed class AudioDeviceViewModel
 		};
 	}
 }
+

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
-using SunshineMultiInstanceManager.Core.Profiles;
+using Helios.Core.Profiles;
 
-namespace SunshineMultiInstanceManager.Core.Storage.Models;
+namespace Helios.Core.Storage.Models;
 
 public sealed class AppSettings
 {
@@ -85,7 +85,7 @@ public sealed class AppSettings
 			{
 				return InstancesRootPath;
 			}
-			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SunshineMultiInstanceManager", "instances");
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Helios", "instances");
 		}
 	}
 
@@ -138,3 +138,4 @@ public sealed class AppSettings
 		ProductInstallPaths[product.Code] = installPath.Trim();
 	}
 }
+

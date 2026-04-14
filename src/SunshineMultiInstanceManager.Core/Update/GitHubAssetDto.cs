@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SunshineMultiInstanceManager.Core.Update;
+namespace Helios.Core.Update;
 
 internal sealed class GitHubAssetDto
 {
@@ -15,3 +15,4 @@ internal sealed class GitHubAssetDto
 	[JsonPropertyName("size")]
 	public long Size { get; set; }
 }
+

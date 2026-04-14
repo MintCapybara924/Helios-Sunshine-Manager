@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Storage;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 public sealed class ProcessManager : IAsyncDisposable
 {
@@ -711,3 +711,4 @@ public sealed class ProcessManager : IAsyncDisposable
 		}
 	}
 }
+

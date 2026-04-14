@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace SunshineMultiInstanceManager.App.Views.Controls;
+namespace Helios.App.Views.Controls;
 
 [ValueConversion(typeof(string), typeof(Visibility))]
 public sealed class StringToVisibilityConverter : IValueConverter
@@ -18,3 +18,4 @@ public sealed class StringToVisibilityConverter : IValueConverter
 		throw new NotSupportedException();
 	}
 }
+

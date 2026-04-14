@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 public static class ServiceControlConstants
 {
-	public const string ServiceName = "SunshineMultiInstanceManagerService";
-	public const string PipeName = "SunshineMultiInstanceManagerServicePipe";
+	public const string ServiceName = "HeliosService";
+	public const string PipeName = "HeliosServicePipe";
 }
 
 public sealed class ServiceCommandRequest
@@ -20,3 +20,4 @@ public sealed class ServiceCommandResponse
 	public string? Error { get; set; }
 	public Dictionary<string, bool>? Statuses { get; set; }
 }
+

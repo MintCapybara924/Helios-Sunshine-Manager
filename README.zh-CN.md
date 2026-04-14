@@ -1,4 +1,4 @@
-# Sunshine Multi-Instance Manager
+# Helios
 
 一款现代化的 WPF 应用程序，用于在单台 Windows 电脑上管理多个 [Sunshine](https://github.com/LizardByte/Sunshine)（及其分支）串流实例。
 
@@ -25,9 +25,9 @@
 
 ## 安装方式
 
-1. 从最新版本下载 `SunshineMultiInstanceManagerSetup.exe`。
+1. 从最新版本下载 `HeliosSetup.exe`。
 2. 运行安装程序并按照屏幕提示完成安装。
-3. 以管理员身份启动 `SunshineMultiInstanceManager.exe`。
+3. 以管理员身份启动 `Helios.exe`。
 
 首次启动时，应用程序会自动：
 - 将 **Spawner Service** 注册为 Windows 服务（LocalSystem）。
@@ -47,10 +47,10 @@
 
 ```bash
 # 构建应用程序
-dotnet build src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj
+dotnet build src/SunshineMultiInstanceManager.App/Helios.App.csproj
 
 # 发布（自动包含 Spawner Service）
-dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj -p:PublishProfile=win-x64-fd
+dotnet publish src/SunshineMultiInstanceManager.App/Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish/win-x64-fd
 ```
 
 发布产物位于 `publish/win-x64-fd/`，包含主应用程序和 `service/` 子目录中的 Spawner Service。
@@ -58,9 +58,9 @@ dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager
 ## 架构
 
 ```
-SunshineMultiInstanceManager.App      WPF 桌面应用程序（UI + 本地控制）
-SunshineMultiInstanceManager.Core     共享库（进程管理、配置、音频、显示、更新）
-SunshineMultiInstanceManager.Spawner  Windows 服务（以 SYSTEM 运行，通过 Named Pipe 指令启动实例）
+Helios.App      WPF 桌面应用程序（UI + 本地控制）
+Helios.Core     共享库（进程管理、配置、音频、显示、更新）
+Helios.Spawner  Windows 服务（以 SYSTEM 运行，通过 Named Pipe 指令启动实例）
 ```
 
 App 通过 Named Pipe 与 Spawner Service 通信。Service 使用分配到用户交互式会话的 SYSTEM Token 启动 Sunshine 实例，使其能够捕获安全桌面（UAC 和登录界面）——与标准 Sunshine 服务安装具有相同的能力。
@@ -75,7 +75,7 @@ App 通过 Named Pipe 与 Spawner Service 通信。Service 使用分配到用户
 
 ## 灵感来源
 
-本项目的灵感来自 [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher)，一款用于多开 Apollo 实例的启动器。Sunshine Multi-Instance Manager 在此基础上扩展了对更多 Sunshine 系列分支的支持。
+本项目的灵感来自 [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher)，一款用于多开 Apollo 实例的启动器。Helios 在此基础上扩展了对更多 Sunshine 系列分支的支持。
 
 ## AI 披露声明
 

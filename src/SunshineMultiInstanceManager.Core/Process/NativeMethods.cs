@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace SunshineMultiInstanceManager.Core.Process;
+namespace Helios.Core.Process;
 
 internal static class NativeMethods
 {
@@ -260,3 +260,4 @@ internal static class NativeMethods
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool SetConsoleCtrlHandler(ConsoleCtrlHandlerRoutine? handler, [MarshalAs(UnmanagedType.Bool)] bool add);
 }
+

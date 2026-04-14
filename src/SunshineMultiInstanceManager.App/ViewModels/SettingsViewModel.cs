@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SunshineMultiInstanceManager.App.Services;
-using SunshineMultiInstanceManager.Core.Audio;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Profiles;
-using SunshineMultiInstanceManager.Core.Scheduler;
-using SunshineMultiInstanceManager.Core.Storage;
-using SunshineMultiInstanceManager.Core.Update;
+using Helios.App.Services;
+using Helios.Core.Audio;
+using Helios.Core.Process;
+using Helios.Core.Profiles;
+using Helios.Core.Scheduler;
+using Helios.Core.Storage;
+using Helios.Core.Update;
 
-namespace SunshineMultiInstanceManager.App.ViewModels;
+namespace Helios.App.ViewModels;
 
 public sealed partial class SettingsViewModel : ObservableObject
 {

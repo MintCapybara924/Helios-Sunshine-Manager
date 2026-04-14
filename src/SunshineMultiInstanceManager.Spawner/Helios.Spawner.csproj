@@ -7,13 +7,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>x64</Platforms>
-    <RootNamespace>SunshineMultiInstanceManager.Spawner</RootNamespace>
+    <RootNamespace>Helios.Spawner</RootNamespace>
     <!-- 浠?Windows Service 鏂瑰紡鍩疯 -->
     <WindowsService>true</WindowsService>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SunshineMultiInstanceManager.Core\SunshineMultiInstanceManager.Core.csproj" />
+    <ProjectReference Include="..\SunshineMultiInstanceManager.Core\Helios.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,3 +22,4 @@
   </ItemGroup>
 
 </Project>
+

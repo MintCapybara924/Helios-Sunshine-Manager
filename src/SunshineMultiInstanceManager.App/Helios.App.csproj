@@ -8,9 +8,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <Platforms>x64</Platforms>
-    <RootNamespace>SunshineMultiInstanceManager.App</RootNamespace>
+    <RootNamespace>Helios.App</RootNamespace>
     <!-- 杓稿嚭鍩疯妾斿悕绋憋紙绉婚櫎 .App 寰岀洞锛岃畵瀹夎鐩寗鐪嬭捣渚嗕咕娣級 -->
-    <AssemblyName>SunshineMultiInstanceManager</AssemblyName>
+    <AssemblyName>Helios</AssemblyName>
     <ApplicationIcon>Assets\SMIM.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- M3 瑁滀笂瀵﹂殯 icon 妾旀寰屽啀鍙栨秷娉ㄩ噵 -->
@@ -21,14 +21,14 @@
     <Version>0.8.0</Version>
     <AssemblyVersion>0.8.0.0</AssemblyVersion>
     <FileVersion>0.8.0.0</FileVersion>
-    <Company>Sunshine Multi-Instance Manager</Company>
-    <Product>Sunshine Multi-Instance Manager</Product>
+    <Company>Helios</Company>
+    <Product>Helios</Product>
     <Description>Multi-instance Sunshine manager</Description>
-    <Copyright>Copyright 漏 2025 Sunshine Multi-Instance Manager</Copyright>
+    <Copyright>Copyright 漏 2025 Helios</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SunshineMultiInstanceManager.Core\SunshineMultiInstanceManager.Core.csproj" />
+    <ProjectReference Include="..\SunshineMultiInstanceManager.Core\Helios.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,7 +57,7 @@
   <!-- Publish 時自動將 Spawner Service 打包到 $(PublishDir)service\ -->
   <Target Name="PublishSpawnerService"
           AfterTargets="Publish">
-    <Exec Command="dotnet publish &quot;$(MSBuildThisFileDirectory)..\SunshineMultiInstanceManager.Spawner\SunshineMultiInstanceManager.Spawner.csproj&quot; -c $(Configuration) -r $(RuntimeIdentifier) --no-self-contained -o &quot;$(PublishDir)service&quot;" />
+    <Exec Command="dotnet publish &quot;$(MSBuildThisFileDirectory)..\SunshineMultiInstanceManager.Spawner\Helios.Spawner.csproj&quot; -c $(Configuration) -r $(RuntimeIdentifier) --no-self-contained -o &quot;$(PublishDir)service&quot;" />
     <!-- 清理 Spawner service 目錄中的 PDB / XML -->
     <ItemGroup>
       <_SpawnerPdb Include="$(PublishDir)service\*.pdb" />
@@ -79,3 +79,4 @@
   </Target>
 
 </Project>
+

@@ -1,19 +1,19 @@
 ; ============================================================
-; SunshineMultiInstanceManagerSetup.iss - Inno Setup 6.x script
+; HeliosSetup.iss - Inno Setup 6.x script
 ;
 ; Build steps:
-;   1) dotnet publish src\SunshineMultiInstanceManager.App\SunshineMultiInstanceManager.App.csproj /p:PublishProfile=win-x64-fd
-;   2) dotnet publish src\SunshineMultiInstanceManager.Spawner\SunshineMultiInstanceManager.Spawner.csproj /p:PublishProfile=win-x64-fd
-;   3) iscc.exe installer\SunshineMultiInstanceManagerSetup.iss
-;   4) Output: installer\dist\SunshineMultiInstanceManagerSetup.exe
+;   1) dotnet publish src\SunshineMultiInstanceManager.App\Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish\win-x64-fd
+;      (PublishSpawnerService target will place spawner payload under publish\win-x64-fd\service\)
+;   2) iscc.exe installer\HeliosSetup.iss
+;   3) Output: installer\dist\HeliosSetup.exe
 ; ============================================================
 
-#define MyAppName      "Sunshine Multi-Instance Manager"
+#define MyAppName      "Helios"
 #define MyAppVersion   "0.8.0"
-#define MyAppPublisher "Sunshine Multi-Instance Manager"
-#define MyAppExeName   "SunshineMultiInstanceManager.exe"
+#define MyAppPublisher "Helios"
+#define MyAppExeName   "Helios.exe"
 #define MyAppSource    "..\publish\win-x64-fd"
-#define MyServiceName    "SunshineMultiInstanceManagerService"
+#define MyServiceName    "HeliosService"
 #define MyDistDir      "dist"
 
 [Setup]
@@ -23,10 +23,10 @@ AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL=https://github.com
 AppSupportURL=https://github.com
-DefaultDirName={autopf}\SunshineMultiInstanceManager
+DefaultDirName={autopf}\Helios
 DefaultGroupName={#MyAppName}
 OutputDir={#MyDistDir}
-OutputBaseFilename=SunshineMultiInstanceManagerSetup
+OutputBaseFilename=HeliosSetup
 SetupIconFile=..\src\SunshineMultiInstanceManager.App\Assets\SMIM.ico
 Compression=lzma2/ultra64
 SolidCompression=yes
@@ -116,7 +116,7 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchApp}"; Flags: nowait 
 [UninstallRun]
 Filename: "{sys}\sc.exe"; Parameters: "stop {#MyServiceName}"; Flags: runhidden; RunOnceId: "StopSvc"
 Filename: "{sys}\sc.exe"; Parameters: "delete {#MyServiceName}"; Flags: runhidden; RunOnceId: "DeleteSvc"
-Filename: "schtasks.exe"; Parameters: "/Delete /TN ""\SunshineMultiInstanceManager\SunshineMultiInstanceManager_AutoStart"" /F"; Flags: runhidden waituntilterminated; RunOnceId: "DeleteSMIMAutoStartTask"
+Filename: "schtasks.exe"; Parameters: "/Delete /TN ""\Helios\Helios_AutoStart"" /F"; Flags: runhidden waituntilterminated; RunOnceId: "DeleteSMIMAutoStartTask"
 Filename: "taskkill.exe"; Parameters: "/f /im {#MyAppExeName}"; Flags: runhidden waituntilterminated; RunOnceId: "KillManagerLauncher"
 
 [Code]
@@ -198,7 +198,7 @@ function PrepareToInstall(var NeedsRestart: Boolean): String;
 var
   ResultCode: Integer;
 begin
-  Exec(ExpandConstant('{sys}\taskkill.exe'), '/F /IM SunshineMultiInstanceManager.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{sys}\sc.exe'), 'stop SunshineMultiInstanceManagerService', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{sys}\taskkill.exe'), '/F /IM Helios.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{sys}\sc.exe'), 'stop HeliosService', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   Result := '';
 end;

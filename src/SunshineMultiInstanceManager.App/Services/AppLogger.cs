@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using SunshineMultiInstanceManager.Core.Process;
-using SunshineMultiInstanceManager.Core.Storage;
+using Helios.Core.Process;
+using Helios.Core.Storage;
 
-namespace SunshineMultiInstanceManager.App.Services;
+namespace Helios.App.Services;
 
 public sealed class AppLogger : ILogger
 {
@@ -90,3 +90,4 @@ public sealed class AppLogger : ILogger
 		}
 	}
 }
+

@@ -6,18 +6,18 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
-using SunshineMultiInstanceManager.Core.Profiles;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Profiles;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Core.Storage;
+namespace Helios.Core.Storage;
 
 public sealed class SettingsStore
 {
 	public event Action? SettingsChanged;
 
-	public static readonly string AppDataRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SunshineMultiInstanceManager");
+	public static readonly string AppDataRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Helios");
 
-	private static readonly string LegacyAppDataRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SunshineMultiInstanceManager");
+	private static readonly string LegacyAppDataRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Helios");
 
 	public static readonly string SettingsPath = Path.Combine(AppDataRoot, "settings.json");
 
@@ -334,3 +334,4 @@ public sealed class SettingsStore
 		}
 	}
 }
+

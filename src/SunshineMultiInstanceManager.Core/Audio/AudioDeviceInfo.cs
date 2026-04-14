@@ -1,4 +1,4 @@
-﻿namespace SunshineMultiInstanceManager.Core.Audio;
+﻿namespace Helios.Core.Audio;
 
 public sealed class AudioDeviceInfo
 {
@@ -25,3 +25,4 @@ public sealed class AudioDeviceInfo
 		return DisplayName;
 	}
 }
+

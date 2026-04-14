@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SunshineMultiInstanceManager.Core.Storage.Models;
+using Helios.Core.Storage.Models;
 
-namespace SunshineMultiInstanceManager.Core.Profiles;
+namespace Helios.Core.Profiles;
 
 public static class BranchConfigAdapter
 {
@@ -86,3 +86,4 @@ public static class BranchConfigAdapter
 		return true;
 	}
 }
+
