@@ -6,15 +6,15 @@
 
 ## 功能特色
 
-- **多实例管理** - 创建、编辑、克隆和删除独立的串流实例，每个实例拥有独立的端口、配置文件和凭证。
-- **支持多个分支** - 兼容 [Sunshine](https://github.com/LizardByte/Sunshine)、[Apollo](https://github.com/ClassicOldSong/Apollo)、[Vibeshine](https://github.com/Nonary/vibeshine) 和 [Vibepollo](https://github.com/Nonary/Vibepollo)。
-- **Service 启动模式** - 实例通过以 LocalSystem 身份运行的后台 Windows Service 启动，可完整捕获桌面画面，包括 UAC 提示和 Windows 登录界面。
-- **开机自动启动** - 集成 Windows 任务计划程序，在用户登录时自动启动管理器。
-- **显示器变更检测** - 当显示器配置变更（分辨率、屏幕数量）时自动重启实例，具备智能防抖和 UAC 感知。
-- **独立音频路由** - 为每个实例指定不同的音频输出设备。
-- **音量同步** - 实时监控系统默认音频音量，并同步到每个实例所配置的音频设备。
-- **自动更新** - 从 GitHub Releases 检查并安装任何支持分支的更新，支持预览版切换和进度跟踪。
-- **现代化界面** - Fluent/WinUI 风格界面，支持深色/浅色主题切换、系统托盘集成和实时日志查看。
+- **多实例管理** - 创建、编辑、克隆和删除独立的串流实例，每个实例都有独立端口和配置目录。
+- **支持多个分支** - 可管理 [Sunshine](https://github.com/LizardByte/Sunshine)、[Apollo](https://github.com/ClassicOldSong/Apollo)、[Vibeshine](https://github.com/Nonary/vibeshine) 和 [Vibepollo](https://github.com/Nonary/Vibepollo)。
+- **Service 运行模式** - 实例通过后台 Windows 服务（LocalSystem）控制，适用于 UAC 与登录界面等安全桌面场景。
+- **每实例运行控制** - 每个实例支持 Start / Stop / Open Web UI，并提供 Start All / Stop All 批量操作。
+- **独立音频路由** - 可为每个实例指定独立音频输出设备。
+- **音量同步** - 可选将系统音量同步到受管理实例。
+- **应用内版本获取与安装** - 可检查 GitHub Releases，并下载/安装任一支持分支的最新安装包（稳定版或预览版）。  
+	这是**手动触发**的更新流程，不是后台自动更新。
+- **现代桌面体验** - Fluent 风格 UI、深色/浅色主题、系统托盘集成与实时日志查看。
 
 ## 系统要求
 

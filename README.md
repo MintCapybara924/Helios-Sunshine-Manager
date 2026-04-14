@@ -6,15 +6,15 @@ A modern WPF application for managing multiple [Sunshine](https://github.com/Liz
 
 ## Features
 
-- **Multi-Instance Management** - Create, edit, clone, and delete independent streaming instances, each with its own port, configuration, and credentials.
-- **Supported Branches** - Works with [Sunshine](https://github.com/LizardByte/Sunshine), [Apollo](https://github.com/ClassicOldSong/Apollo), [Vibeshine](https://github.com/Nonary/vibeshine), and [Vibepollo](https://github.com/Nonary/Vibepollo).
-- **Service-Based Launch** - Instances are launched via a background Windows Service running as LocalSystem, enabling full desktop capture including UAC prompts and the Windows login screen.
-- **Auto-Start on Boot** - Windows Task Scheduler integration to launch the manager at user logon.
-- **Display Change Detection** - Automatically restarts instances when display configuration changes (resolution, monitor count), with smart debouncing and UAC-awareness.
-- **Per-Instance Audio Routing** - Assign a specific audio output device to each instance.
-- **Volume Synchronization** - Monitors the system default audio volume and syncs it to each instance's configured audio sink in real time.
-- **Auto-Update** - Check for and install updates from GitHub Releases for any supported branch, with pre-release toggle and progress tracking.
-- **Modern UI** - Fluent/WinUI-styled interface with dark/light theme support, system tray integration, and real-time log viewer.
+- **Multi-Instance Management** - Create, edit, clone, and delete independent streaming instances, each with its own port and configuration directory.
+- **Supported Branches** - Manage instances for [Sunshine](https://github.com/LizardByte/Sunshine), [Apollo](https://github.com/ClassicOldSong/Apollo), [Vibeshine](https://github.com/Nonary/vibeshine), and [Vibepollo](https://github.com/Nonary/Vibepollo).
+- **Service-Based Runtime** - Instances are controlled through the background Windows service (LocalSystem), designed for secure desktop scenarios (UAC and sign-in screen handling).
+- **Per-Instance Runtime Controls** - Start/Stop/Open Web UI per instance, plus Start All / Stop All for batch operations.
+- **Per-Instance Audio Routing** - Assign a specific output device for each instance.
+- **Volume Synchronization** - Optionally sync system volume to managed instances.
+- **In-App Release Fetch & Install** - Check GitHub Releases and download/install the latest installer for any supported branch (stable or pre-release selection).  
+	This is a **manual, user-triggered update flow**, not background automatic updating.
+- **Modern Desktop UX** - Fluent-style UI, light/dark theme, system tray integration, and runtime log viewer.
 
 ## Requirements
 
