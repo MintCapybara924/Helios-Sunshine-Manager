@@ -246,7 +246,7 @@ public sealed partial class SettingsViewModel : ObservableObject
 
 		InstalledVersion = _installer.GetInstalledVersion(value, _store.Settings.GetProductExecutablePath(value));
 		LatestRelease = null;
-		StatusMessage = $"已切換分支：{CurrentProduct.DisplayName}";
+		StatusMessage = string.Format(LocalizationService.T("StatusBranchSwitchedFmt"), CurrentProduct.DisplayName);
 
 		OnPropertyChanged(nameof(ServiceCardNameText));
 		OnPropertyChanged(nameof(IsVibeshinInstalled));
