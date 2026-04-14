@@ -188,6 +188,8 @@ public partial class MainViewModel : ObservableObject
 
 	private void OnLanguageChanged()
 	{
+		_ = RefreshAudioDevices();
+
 		foreach (var instance in Instances)
 		{
 			instance.NotifyLocalizationChanged();

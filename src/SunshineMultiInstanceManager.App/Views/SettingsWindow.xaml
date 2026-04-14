@@ -56,7 +56,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="260"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Text="{Binding LanguageText}"

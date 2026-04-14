@@ -126,6 +126,7 @@ public static class LocalizationService
 		["StatusInstanceStopped"] = "Instance stopped",
 		["StatusOpenWebUiRequested"] = "Open Web UI requested",
 		["StatusThemeChangedFmt"] = "Theme switched to: {0}",
+		["LanguageOptionSystemDefault"] = "Default (Follow System)",
 		["StatusAllInstancesStarted"] = "All instances started",
 		["StatusAllInstancesStopped"] = "All instances stopped"
 	};
@@ -247,6 +248,7 @@ public static class LocalizationService
 		["StatusInstanceStopped"] = "實例已停止",
 		["StatusOpenWebUiRequested"] = "已要求開啟 Web UI",
 		["StatusThemeChangedFmt"] = "主題已切換為：{0}",
+		["LanguageOptionSystemDefault"] = "預設（跟隨系統）",
 		["StatusAllInstancesStarted"] = "全部實例已啟動",
 		["StatusAllInstancesStopped"] = "全部實例已停止"
 	};
@@ -368,6 +370,7 @@ public static class LocalizationService
 		["StatusInstanceStopped"] = "实例已停止",
 		["StatusOpenWebUiRequested"] = "已请求打开 Web UI",
 		["StatusThemeChangedFmt"] = "主题已切换为：{0}",
+		["LanguageOptionSystemDefault"] = "默认（跟随系统）",
 		["StatusAllInstancesStarted"] = "全部实例已启动",
 		["StatusAllInstancesStopped"] = "全部实例已停止"
 	};
@@ -489,6 +492,7 @@ public static class LocalizationService
 		["StatusInstanceStopped"] = "インスタンスを停止しました",
 		["StatusOpenWebUiRequested"] = "Web UI を開く要求を送信しました",
 		["StatusThemeChangedFmt"] = "テーマを {0} に切り替えました",
+		["LanguageOptionSystemDefault"] = "既定（システムに従う）",
 		["StatusAllInstancesStarted"] = "すべてのインスタンスを開始しました",
 		["StatusAllInstancesStopped"] = "すべてのインスタンスを停止しました"
 	};
@@ -501,7 +505,7 @@ public static class LocalizationService
 
 	public static IReadOnlyList<LanguageOption> GetLanguageOptions() =>
 	[
-		new("system", "Follow System"),
+		new("system", T("LanguageOptionSystemDefault")),
 		new("en-US", "English"),
 		new("zh-TW", "繁體中文"),
 		new("zh-CN", "简体中文"),
