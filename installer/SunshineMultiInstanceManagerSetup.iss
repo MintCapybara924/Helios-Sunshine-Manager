@@ -9,12 +9,10 @@
 ; ============================================================
 
 #define MyAppName      "Sunshine Multi-Instance Manager"
-#define MyAppVersion   "1.0.0"
+#define MyAppVersion   "0.8.0"
 #define MyAppPublisher "Sunshine Multi-Instance Manager"
 #define MyAppExeName   "SunshineMultiInstanceManager.exe"
-#define MyAppSource    "..\src\SunshineMultiInstanceManager.App\publish\win-x64-fd"
-#define MyServiceExeName "SunshineMultiInstanceManager.Spawner.exe"
-#define MyServiceSource  "..\src\SunshineMultiInstanceManager.Spawner\publish\win-x64-fd"
+#define MyAppSource    "..\publish\win-x64-fd"
 #define MyServiceName    "SunshineMultiInstanceManagerService"
 #define MyDistDir      "dist"
 
@@ -36,8 +34,8 @@ LZMAUseSeparateProcess=yes
 WizardStyle=modern
 PrivilegesRequired=admin
 MinVersion=10.0.17763
-ArchitecturesAllowed=x64compatible
-ArchitecturesInstallIn64BitMode=x64compatible
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Languages]
@@ -105,7 +103,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchShortcut}"; GroupDes
 
 [Files]
 Source: "{#MyAppSource}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyServiceSource}\{#MyServiceExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppSource}\service\*"; DestDir: "{app}\service"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -113,14 +111,11 @@ Name: "{group}\Uninstall {#MyAppName}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "sc.exe"; Parameters: "create {#MyServiceName} start= auto binPath= ""{app}\{#MyServiceExeName}"" DisplayName= ""Sunshine Multi-Instance Manager Service"""; Flags: runhidden waituntilterminated; Check: not ServiceExists('{#MyServiceName}')
-Filename: "sc.exe"; Parameters: "config {#MyServiceName} start= auto"; Flags: runhidden waituntilterminated; Check: ServiceExists('{#MyServiceName}')
-Filename: "sc.exe"; Parameters: "start {#MyServiceName}"; Flags: runhidden waituntilterminated; Check: ServiceExists('{#MyServiceName}') and not ServiceRunning('{#MyServiceName}')
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchApp}"; Flags: nowait postinstall skipifsilent shellexec; Verb: "runas"
 
 [UninstallRun]
-Filename: "sc.exe"; Parameters: "stop {#MyServiceName}"; Flags: runhidden waituntilterminated; Check: ServiceExists('{#MyServiceName}') and ServiceRunning('{#MyServiceName}'); RunOnceId: "StopSMIMService"
-Filename: "sc.exe"; Parameters: "delete {#MyServiceName}"; Flags: runhidden waituntilterminated; Check: ServiceExists('{#MyServiceName}'); RunOnceId: "DeleteSMIMService"
+Filename: "{sys}\sc.exe"; Parameters: "stop {#MyServiceName}"; Flags: runhidden; RunOnceId: "StopSvc"
+Filename: "{sys}\sc.exe"; Parameters: "delete {#MyServiceName}"; Flags: runhidden; RunOnceId: "DeleteSvc"
 Filename: "schtasks.exe"; Parameters: "/Delete /TN ""\SunshineMultiInstanceManager\SunshineMultiInstanceManager_AutoStart"" /F"; Flags: runhidden waituntilterminated; RunOnceId: "DeleteSMIMAutoStartTask"
 Filename: "taskkill.exe"; Parameters: "/f /im {#MyAppExeName}"; Flags: runhidden waituntilterminated; RunOnceId: "KillManagerLauncher"
 
@@ -197,4 +192,13 @@ begin
     Result := False;
     Exit;
   end;
+end;
+
+function PrepareToInstall(var NeedsRestart: Boolean): String;
+var
+  ResultCode: Integer;
+begin
+  Exec(ExpandConstant('{sys}\taskkill.exe'), '/F /IM SunshineMultiInstanceManager.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{sys}\sc.exe'), 'stop SunshineMultiInstanceManagerService', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Result := '';
 end;
