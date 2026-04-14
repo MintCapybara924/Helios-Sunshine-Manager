@@ -5,7 +5,7 @@
 ;   1) dotnet publish src\SunshineMultiInstanceManager.App\Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish\win-x64-fd
 ;      (PublishSpawnerService target will place spawner payload under publish\win-x64-fd\service\)
 ;   2) iscc.exe installer\HeliosSetup.iss
-;   3) Output: installer\dist\HeliosSetup.exe
+;   3) Output: installer\dist\HeliosSetup_<version>.exe
 ; ============================================================
 
 #define MyAppName      "Helios"
@@ -26,7 +26,7 @@ AppSupportURL=https://github.com
 DefaultDirName={autopf}\Helios
 DefaultGroupName={#MyAppName}
 OutputDir={#MyDistDir}
-OutputBaseFilename=HeliosSetup
+OutputBaseFilename=HeliosSetup_{#MyAppVersion}
 SetupIconFile=..\src\SunshineMultiInstanceManager.App\Assets\SMIM.ico
 Compression=lzma2/ultra64
 SolidCompression=yes
