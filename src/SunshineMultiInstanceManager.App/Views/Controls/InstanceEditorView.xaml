@@ -287,7 +287,7 @@
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
                     <ui:Button Command="{Binding OpenWebUiCommand}"
                                IsEnabled="{Binding CanOpenWebUiSelectedInstance}"
-                               Appearance="Secondary" Width="110" FontSize="12"
+                           Appearance="Secondary" MinWidth="110" FontSize="12"
                                Content="{Binding EditorOpenWebUiText}"/>
                     <ui:Button Command="{Binding StartInstanceCommand}"
                                IsEnabled="{Binding CanStartSelectedInstance}"
