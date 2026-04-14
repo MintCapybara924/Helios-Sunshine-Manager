@@ -45,8 +45,6 @@ No manual service setup is required.
 
 ## Screenshots
 
-> Put screenshots under `docs/screenshots/` and keep filenames stable.
-
 ### Main Window
 
 ![Helios Main Window](docs/screenshots/main-window.png)
