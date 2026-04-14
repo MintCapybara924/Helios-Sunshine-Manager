@@ -167,6 +167,9 @@ public sealed class SettingsStore
 			string relativePath = Path.GetRelativePath(source.InstanceDirectory, sourcePath);
 			if (relativePath.StartsWith("logs" + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
 				|| relativePath.Equals("logs", StringComparison.OrdinalIgnoreCase)
+				|| relativePath.StartsWith("credentials" + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+				|| relativePath.Equals("credentials", StringComparison.OrdinalIgnoreCase)
+				|| relativePath.Equals("sunshine_state.json", StringComparison.OrdinalIgnoreCase)
 				|| sourcePath.EndsWith(".tmp", StringComparison.OrdinalIgnoreCase))
 			{
 				continue;
