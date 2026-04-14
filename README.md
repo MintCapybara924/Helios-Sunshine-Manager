@@ -1,4 +1,6 @@
-# Sunshine Multi-Instance Manager
+# Helios
+
+Formerly Sunshine Multi-Instance Manager.
 
 A modern WPF application for managing multiple [Sunshine](https://github.com/LizardByte/Sunshine) (and its forks) streaming instances on a single Windows machine.
 
@@ -9,11 +11,10 @@ A modern WPF application for managing multiple [Sunshine](https://github.com/Liz
 - **Multi-Instance Management** - Create, edit, clone, and delete independent streaming instances, each with its own port, configuration, and credentials.
 - **Supported Branches** - Works with [Sunshine](https://github.com/LizardByte/Sunshine), [Apollo](https://github.com/ClassicOldSong/Apollo), [Vibeshine](https://github.com/Nonary/vibeshine), and [Vibepollo](https://github.com/Nonary/Vibepollo).
 - **Service-Based Launch** - Instances are launched via a background Windows Service running as LocalSystem, enabling full desktop capture including UAC prompts and the Windows login screen.
-- **Auto-Start on Boot** - Windows Task Scheduler integration to launch the manager at user logon.
-- **Display Change Detection** - Automatically restarts instances when display configuration changes (resolution, monitor count), with smart debouncing and UAC-awareness.
+- **Per-Instance Controls** - Each instance supports Start / Stop / Open Web UI, with Start All / Stop All for batch operations.
 - **Per-Instance Audio Routing** - Assign a specific audio output device to each instance.
-- **Volume Synchronization** - Monitors the system default audio volume and syncs it to each instance's configured audio sink in real time.
-- **Auto-Update** - Check for and install updates from GitHub Releases for any supported branch, with pre-release toggle and progress tracking.
+- **Volume Synchronization** - Optionally sync system volume to managed instances.
+- **In-App Version Fetch + Install** - Check GitHub Releases and download/install the latest installer for any supported branch (stable or pre-release). This is a manually triggered workflow, not background auto-update.
 - **Modern UI** - Fluent/WinUI-styled interface with dark/light theme support, system tray integration, and real-time log viewer.
 
 ## Requirements
@@ -25,9 +26,9 @@ A modern WPF application for managing multiple [Sunshine](https://github.com/Liz
 
 ## Installation
 
-1. Download `SunshineMultiInstanceManagerSetup.exe` from the latest release.
+1. Download `HeliosSetup_<version>.exe` from the latest release.
 2. Run the installer and follow the on-screen instructions.
-3. Launch `SunshineMultiInstanceManager.exe` as administrator.
+3. Launch `Helios.exe` as administrator.
 
 On first launch, the application will automatically:
 - Register the **Spawner Service** as a Windows Service (LocalSystem).
@@ -57,10 +58,10 @@ No manual service setup is required.
 
 ```bash
 # Build the application
-dotnet build src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj
+dotnet build src/SunshineMultiInstanceManager.App/Helios.App.csproj
 
 # Publish (includes Spawner Service automatically)
-dotnet publish src/SunshineMultiInstanceManager.App/SunshineMultiInstanceManager.App.csproj -p:PublishProfile=win-x64-fd
+dotnet publish src/SunshineMultiInstanceManager.App/Helios.App.csproj -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -o publish/win-x64-fd
 ```
 
 The publish output at `publish/win-x64-fd/` includes the main application and the `service/` subdirectory containing the Spawner Service.
@@ -68,9 +69,9 @@ The publish output at `publish/win-x64-fd/` includes the main application and th
 ## Architecture
 
 ```
-SunshineMultiInstanceManager.App      WPF desktop application (UI + local control)
-SunshineMultiInstanceManager.Core     Shared library (process management, config, audio, display, updates)
-SunshineMultiInstanceManager.Spawner  Windows Service (runs as SYSTEM, launches instances via Named Pipe commands)
+Helios.App      WPF desktop application (UI + local control)
+Helios.Core     Shared library (process management, config, audio, display, updates)
+Helios.Spawner  Windows Service (runs as SYSTEM, launches instances via Named Pipe commands)
 ```
 
 The App communicates with the Spawner Service over a Named Pipe. The Service launches Sunshine instances using a SYSTEM token assigned to the user's interactive session, which allows capturing the secure desktop (UAC and login screen) - the same capability as a standard Sunshine service installation.
@@ -85,7 +86,7 @@ This project was built primarily for personal use. Functionality is not guarante
 
 ## Inspiration
 
-This project was inspired by [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher), a multi-instance launcher for Apollo. Sunshine Multi-Instance Manager expands on the concept with a broader range of supported branches, a service-based architecture for secure desktop capture, and additional features such as audio routing and auto-update.
+This project was inspired by [Apollo Fleet Launcher](https://github.com/drajabr/Apollo-Fleet-Launcher), a multi-instance launcher for Apollo. Helios expands on the concept with support for a broader set of Sunshine-family branches.
 
 ## AI Disclosure
 
