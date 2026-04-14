@@ -38,6 +38,10 @@ Thumbs.db
 # Publish and release artifacts
 publish/
 releases/
+installer/dist/
+
+# Local tool cache / binaries
+.tools/
 
 # Project local tooling/config
 .claude/settings.local.json
