@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64</Platforms>
+    <RootNamespace>SunshineMultiInstanceManager.App</RootNamespace>
+    <!-- 杓稿嚭鍩疯妾斿悕绋憋紙绉婚櫎 .App 寰岀洞锛岃畵瀹夎鐩寗鐪嬭捣渚嗕咕娣級 -->
+    <AssemblyName>SunshineMultiInstanceManager</AssemblyName>
+    <ApplicationIcon>Assets\SMIM.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- M3 瑁滀笂瀵﹂殯 icon 妾旀寰屽啀鍙栨秷娉ㄩ噵 -->
+    <!-- 闂滈枆涓昏绐楁檪涓嶇祼鏉?App锛岃畵 systray 绻肩簩閬嬭 -->
+    <ShutdownMode>OnExplicitShutdown</ShutdownMode>
+
+    <!-- 鐗堟湰璩囪▕锛堥’绀烘柤 Windows 鍏у 鈫?瑭崇窗璩囨枡锛?-->
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>Sunshine Multi-Instance Manager</Company>
+    <Product>Sunshine Multi-Instance Manager</Product>
+    <Description>Multi-instance Sunshine manager</Description>
+    <Copyright>Copyright 漏 2025 Sunshine Multi-Instance Manager</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SunshineMultiInstanceManager.Core\SunshineMultiInstanceManager.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- WPF-UI锛氱従浠ｅ寲 Fluent/WinUI 妯ｅ紡鍏冧欢搴?-->
+    <PackageReference Include="WPF-UI" Version="3.0.5" />
+    <!-- MVVM 宸ュ叿鍖?-->
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <!-- Systray 鍦栫ず锛圵PF 鍘熺敓 NotifyIcon 灏佽锛?-->
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <!-- Microsoft.Extensions.Logging.Abstractions锛圛Logger<T> 瀵︿綔锛?-->
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\SMIM.ico" />
+  </ItemGroup>
+
+  <!-- M3 瑁滀笂 icon 寰屽彇娑堟敞閲?  <ItemGroup>
+    <None Update="Assets\app.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  -->
+
+  <!-- 鐧煎竷寰屾竻鐞嗭細绉婚櫎娲╂紡閫茬櫦甯冪洰閷勭殑 PDB / XML 鏂囦欢锛堜締鑷浉渚濆皥妗堬級銆?       鍍呭湪瀵﹂殯 Publish 娴佺▼锛坃IsPublishing=true锛夋檪鍩疯锛屼笉褰遍熆涓€鑸?Build銆?-->
+  <!-- Publish 時自動將 Spawner Service 打包到 $(PublishDir)service\ -->
+  <Target Name="PublishSpawnerService"
+          AfterTargets="Publish">
+    <Exec Command="dotnet publish &quot;$(MSBuildThisFileDirectory)..\SunshineMultiInstanceManager.Spawner\SunshineMultiInstanceManager.Spawner.csproj&quot; -c $(Configuration) -r $(RuntimeIdentifier) --no-self-contained -o &quot;$(PublishDir)service&quot;" />
+    <!-- 清理 Spawner service 目錄中的 PDB / XML -->
+    <ItemGroup>
+      <_SpawnerPdb Include="$(PublishDir)service\*.pdb" />
+      <_SpawnerXml Include="$(PublishDir)service\*.xml" />
+    </ItemGroup>
+    <Delete Files="@(_SpawnerPdb)" />
+    <Delete Files="@(_SpawnerXml)" />
+  </Target>
+
+  <Target Name="CleanPublishArtifacts"
+          AfterTargets="Publish"
+          Condition="'$(PublishSingleFile)' == 'true'">
+    <ItemGroup>
+      <_PdbToDelete Include="$(PublishDir)**\*.pdb" />
+      <_XmlToDelete Include="$(PublishDir)**\*.xml" />
+    </ItemGroup>
+    <Delete Files="@(_PdbToDelete)" />
+    <Delete Files="@(_XmlToDelete)" />
+  </Target>
+
+</Project>

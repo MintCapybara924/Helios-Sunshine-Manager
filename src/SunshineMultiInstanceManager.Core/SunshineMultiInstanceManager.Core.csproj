@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>x64</Platforms>
+    <RootNamespace>SunshineMultiInstanceManager.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- JSON 搴忓垪鍖?-->
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <!-- NAudio锛欳ore Audio API 灏佽锛圛AudioEndpointVolume銆両MMDeviceEnumerator锛?-->
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <!-- Task Scheduler 灏佽 -->
+    <PackageReference Include="TaskScheduler" Version="2.11.1" />
+    <!-- Windows 鏈嶅嫏鎺у埗锛圫erviceController銆丼erviceControllerStatus锛?-->
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

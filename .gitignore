@@ -1,0 +1,43 @@
+# Build outputs
+[Bb]in/
+[Oo]bj/
+out/
+artifacts/
+
+# Test and coverage
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Logs and temp
+*.log
+*.tmp
+*.cache
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Publish and release artifacts
+publish/
+releases/
+
+# Project local tooling/config
+.claude/settings.local.json

@@ -1,0 +1,315 @@
+﻿<UserControl
+    x:Class="SunshineMultiInstanceManager.App.Views.Controls.InstanceEditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:local="clr-namespace:SunshineMultiInstanceManager.App.Views.Controls"
+    xmlns:vm="clr-namespace:SunshineMultiInstanceManager.App.ViewModels"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="420">
+
+    <UserControl.Resources>
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <!-- WPF-UI Button 對自訂 Content（例如 Icon + TextBlock）在 IsEnabled=false 時不會自動套灰，
+             加個共通 Style 用 Opacity trigger 強制顯示禁用視覺。 -->
+        <Style x:Key="DisabledAwareIconButtonStyle" TargetType="ui:Button" BasedOn="{StaticResource {x:Type ui:Button}}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- 鐒￠伕鍙栨彁绀?-->
+        <TextBlock
+            Text="{Binding EditorSelectPromptText}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Opacity="0.5"
+            FontSize="14">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedInstance}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- 绶ㄨ集闈㈡澘 -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer.Style>
+                <Style TargetType="ScrollViewer">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedInstance}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
+
+            <local:SpacedStackPanel
+                Margin="16"
+                DataContext="{Binding SelectedInstance}"
+                Spacing="12">
+
+                <!-- 鈹€鈹€ 鍩烘湰璩囪▕ 鈹€鈹€ -->
+                <ui:CardExpander Header="{Binding DataContext.EditorGroupBasicText, RelativeSource={RelativeSource AncestorType=UserControl}}" IsExpanded="True">
+                    <local:SpacedStackPanel Spacing="10" Margin="0,8,0,0">
+
+                        <!-- 鍟熺敤鍒囨彌 -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding DataContext.EditorEnableText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="13" FontWeight="Medium"/>
+                                <TextBlock Text="{Binding DataContext.EditorEnableHintText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="11" Opacity="0.6"/>
+                            </StackPanel>
+                            <ui:ToggleSwitch
+                                Grid.Column="1"
+                                IsChecked="{Binding EditEnabled, Mode=TwoWay}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Separator Opacity="0.2"/>
+
+                        <!-- 鍚嶇ū -->
+                        <local:SpacedStackPanel Spacing="4">
+                            <TextBlock Text="{Binding DataContext.EditorInstanceNameText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="12" Opacity="0.8"/>
+                            <ui:TextBox
+                                Text="{Binding EditName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{Binding DataContext.EditorInstanceNamePlaceholderText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                FontSize="13"/>
+                            <TextBlock
+                                Text="{Binding NameValidationError}"
+                                FontSize="11"
+                                Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+                                Visibility="{Binding NameValidationError,
+                                    Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </local:SpacedStackPanel>
+
+                        <!-- Port -->
+                        <local:SpacedStackPanel Spacing="4">
+                            <TextBlock Text="{Binding DataContext.EditorPortText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="12" Opacity="0.8"/>
+                            <ui:TextBox
+                                Text="{Binding EditPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{Binding DataContext.EditorPortPlaceholderText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                FontSize="13"/>
+                            <TextBlock
+                                Text="{Binding PortValidationError}"
+                                FontSize="11"
+                                Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+                                Visibility="{Binding PortValidationError,
+                                    Converter={StaticResource StringToVisibilityConverter}}"/>
+                        </local:SpacedStackPanel>
+
+                        <!-- Product Branch -->
+                        <local:SpacedStackPanel Spacing="4">
+                            <TextBlock Text="{Binding DataContext.EditorBranchText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="12" Opacity="0.8"/>
+                            <TextBlock Text="{Binding DataContext.EditorBranchHintText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="11" Opacity="0.6"/>
+                            <ComboBox
+                                ItemsSource="{Binding DataContext.ProductOptions, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                SelectedValue="{Binding EditProductCode, Mode=TwoWay}"
+                                SelectedValuePath="Code"
+                                DisplayMemberPath="DisplayName"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                FontSize="13"
+                                HorizontalAlignment="Stretch">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="ComboBoxItem">
+                                        <Setter Property="IsEnabled" Value="{Binding IsInstalled}"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+                        </local:SpacedStackPanel>
+
+                    </local:SpacedStackPanel>
+                </ui:CardExpander>
+
+                <!-- 鈹€鈹€ 闊宠▕瑁濈疆 鈹€鈹€ -->
+                <ui:CardExpander Header="{Binding DataContext.EditorGroupAudioText, RelativeSource={RelativeSource AncestorType=UserControl}}" IsExpanded="True">
+                    <local:SpacedStackPanel Spacing="10" Margin="0,8,0,0">
+                        <TextBlock
+                            Text="{Binding DataContext.EditorAudioDescText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            TextWrapping="Wrap"
+                            FontSize="11"
+                            Opacity="0.65"/>
+                        <!-- ItemsSource 缍佸畾 MainViewModel.AvailableAudioDevices -->
+                        <!-- DataContext 鍦ㄦ鐐?SelectedInstance锛岄渶 RelativeSource 鍙?MainViewModel -->
+                        <ComboBox
+                            x:Name="AudioDeviceCombo"
+                            ItemsSource="{Binding DataContext.AvailableAudioDevices,
+                                RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            SelectedItem="{Binding EditAudioDevice, Mode=TwoWay}"
+                            DisplayMemberPath="FriendlyName"
+                            IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                            FontSize="13"
+                            HorizontalAlignment="Stretch"/>
+
+                        <!-- 鍒锋柊瑁濈疆鎸夐垥 -->
+                        <ui:Button
+                            Content="{Binding DataContext.EditorRefreshDevicesText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            FontSize="11"
+                            IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                            HorizontalAlignment="Left"
+                            Command="{Binding DataContext.RefreshAudioDevicesCommand,
+                                RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    </local:SpacedStackPanel>
+                </ui:CardExpander>
+
+                <!-- 鈹€鈹€ 椤ず鍣ㄨō瀹?鈹€鈹€ -->
+                <ui:CardExpander Header="{Binding DataContext.EditorGroupDisplayText, RelativeSource={RelativeSource AncestorType=UserControl}}" IsExpanded="True">
+                    <local:SpacedStackPanel Spacing="12" Margin="0,8,0,0">
+
+                        <!-- Headless Mode -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding DataContext.EditorHeadlessTitleText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                           FontSize="13" FontWeight="Medium"/>
+                                <TextBlock
+                                    Text="{Binding DataContext.EditorHeadlessDescText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    FontSize="11" Opacity="0.6" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <ui:ToggleSwitch
+                                Grid.Column="1"
+                                IsChecked="{Binding EditHeadlessMode, Mode=TwoWay}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <!-- Terminate on Pause -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding DataContext.EditorTerminateTitleText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                           FontSize="13" FontWeight="Medium"/>
+                                <TextBlock
+                                    Text="{Binding DataContext.EditorTerminateDescText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    FontSize="11" Opacity="0.6" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <ui:ToggleSwitch
+                                Grid.Column="1"
+                                IsChecked="{Binding EditTerminateOnPause, Mode=TwoWay}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+
+                    </local:SpacedStackPanel>
+                </ui:CardExpander>
+
+                <!-- 鈹€鈹€ 閫查殠 鈹€鈹€ -->
+                <ui:CardExpander Header="{Binding DataContext.EditorGroupAdvancedText, RelativeSource={RelativeSource AncestorType=UserControl}}" IsExpanded="False">
+                    <local:SpacedStackPanel Spacing="10" Margin="0,8,0,0">
+
+                        <!-- 椤嶅鍟熷嫊鍙冩暩 -->
+                        <local:SpacedStackPanel Spacing="4">
+                            <TextBlock Text="{Binding DataContext.EditorExtraArgsText, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="12" Opacity="0.8"/>
+                            <ui:TextBox
+                                Text="{Binding EditExtraArgs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{Binding DataContext.EditorExtraArgsPlaceholderText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                FontSize="12"/>
+                        </local:SpacedStackPanel>
+
+                        <!-- 鑷▊鍙煼琛屾獢璺緫 -->
+                        <local:SpacedStackPanel Spacing="4">
+                            <TextBlock Text="{Binding DataContext.EditorExePathText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                       FontSize="12" Opacity="0.8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ui:TextBox
+                                    Grid.Column="0"
+                                    x:Name="ExePathBox"
+                                    Text="{Binding EditExecutablePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    PlaceholderText="C:\Program Files\Sunshine\sunshine.exe"
+                                    IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                    FontSize="12"/>
+                                <ui:Button
+                                    Grid.Column="1"
+                                    Margin="4,0,0,0"
+                                    Content="{Binding DataContext.EditorBrowseText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    FontSize="12"
+                                    IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                    Click="BrowseExePath_Click"/>
+                            </Grid>
+                        </local:SpacedStackPanel>
+
+                    </local:SpacedStackPanel>
+                </ui:CardExpander>
+
+                <!-- 鈹€鈹€ Apply / Discard 鎸夐垥 鈹€鈹€ -->
+                <local:SpacedStackPanel Orientation="Horizontal" Spacing="8"
+                            HorizontalAlignment="Right"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ui:Button
+                        Command="{Binding DiscardEditsCommand}"
+                        IsEnabled="{Binding CanApplyDiscardSelectedInstance}"
+                        Content="{Binding EditorDiscardText}"
+                        FontSize="13"
+                        Width="80"/>
+                    <ui:Button
+                        Command="{Binding ApplyCommand}"
+                        IsEnabled="{Binding CanApplyDiscardSelectedInstance}"
+                        Content="{Binding EditorApplyText}"
+                        Appearance="Primary"
+                        FontSize="13"
+                        Width="80"/>
+                </local:SpacedStackPanel>
+
+                <!-- 鈹€鈹€ 閫茬▼鎺у埗鎸夐垥 鈹€鈹€ -->
+                <local:SpacedStackPanel Orientation="Horizontal" Spacing="8"
+                            HorizontalAlignment="Right"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ui:Button Command="{Binding OpenWebUiCommand}"
+                               IsEnabled="{Binding CanOpenWebUiSelectedInstance}"
+                               Appearance="Secondary" Width="110" FontSize="12"
+                               Content="{Binding EditorOpenWebUiText}"/>
+                    <ui:Button Command="{Binding StartInstanceCommand}"
+                               IsEnabled="{Binding CanStartSelectedInstance}"
+                               Style="{StaticResource DisabledAwareIconButtonStyle}"
+                               Width="90" FontSize="12">
+                        <local:SpacedStackPanel Orientation="Horizontal" Spacing="4">
+                            <ui:SymbolIcon Symbol="Play16"/>
+                            <TextBlock Text="{Binding EditorStartText}"/>
+                        </local:SpacedStackPanel>
+                    </ui:Button>
+                    <ui:Button Command="{Binding StopInstanceCommand}"
+                               IsEnabled="{Binding CanStopSelectedInstance}"
+                               Style="{StaticResource DisabledAwareIconButtonStyle}"
+                               Appearance="Secondary" Width="90" FontSize="12">
+                        <local:SpacedStackPanel Orientation="Horizontal" Spacing="4">
+                            <ui:SymbolIcon Symbol="Stop16"/>
+                            <TextBlock Text="{Binding EditorStopText}"/>
+                        </local:SpacedStackPanel>
+                    </ui:Button>
+                </local:SpacedStackPanel>
+
+            </local:SpacedStackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
