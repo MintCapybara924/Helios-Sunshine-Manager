@@ -143,6 +143,7 @@ public sealed class SettingsStore
 		ResolveInstancePath(instanceConfig, Settings.ResolvedInstancesRootPath);
 		if (cloneFrom != null)
 		{
+			instanceConfig.Enabled = false;
 			CloneInstanceFiles(cloneFrom, instanceConfig);
 		}
 		if (string.IsNullOrWhiteSpace(instanceConfig.ExecutablePath))
