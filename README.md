@@ -13,7 +13,6 @@ A modern WPF application for managing multiple [Sunshine](https://github.com/Liz
 - **Service-Based Launch** - Instances are launched via a background Windows Service running as LocalSystem, enabling full desktop capture including UAC prompts and the Windows login screen.
 - **Per-Instance Controls** - Each instance supports Start / Stop / Open Web UI, with Start All / Stop All for batch operations.
 - **Per-Instance Audio Routing** - Assign a specific audio output device to each instance.
-- **Volume Synchronization** - Optionally sync system volume to managed instances.
 - **In-App Version Fetch + Install** - Check GitHub Releases and download/install the latest installer for any supported branch (stable or pre-release). This is a manually triggered workflow, not background auto-update.
 - **Modern UI** - Fluent/WinUI-styled interface with dark/light theme support, system tray integration, and real-time log viewer.
 

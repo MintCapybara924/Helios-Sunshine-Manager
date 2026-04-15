@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 using System.Windows;
@@ -91,6 +92,13 @@ public sealed partial class SettingsViewModel : ObservableObject
 	private static readonly string[] ReminderServiceNames = ["SunshineService", "ApolloService"];
 
 	public string AppNameText => LocalizationService.T("AppName");
+	public string AppVersionText => $"v{GetAppVersion()}";
+
+	private static string GetAppVersion()
+	{
+		Version? v = Assembly.GetExecutingAssembly().GetName().Version;
+		return v is null ? "?" : $"{v.Major}.{v.Minor}.{v.Build}";
+	}
 	public string SettingsText => LocalizationService.T("Settings");
 	public string LanguageText => LocalizationService.T("Language");
 	public string ProductBranchText => LocalizationService.T("ProductBranch");

@@ -9,7 +9,7 @@
 ; ============================================================
 
 #define MyAppName      "Helios"
-#define MyAppVersion   "0.8.0"
+#define MyAppVersion   "0.8.1"
 #define MyAppPublisher "Helios"
 #define MyAppExeName   "Helios.exe"
 #define MyAppSource    "..\publish\win-x64-fd"
